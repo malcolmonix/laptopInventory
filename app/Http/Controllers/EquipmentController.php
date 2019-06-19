@@ -33,9 +33,14 @@ class EquipmentController extends AppBaseController
     {
         $this->equipmentRepository->pushCriteria(new RequestCriteria($request));
         $equipment = $this->equipmentRepository->all();
+        $equipment_type = EquipmentType::pluck('name', 'id');
+        $situation = Situation::pluck('name', 'id');
+
 
         return view('equipment.index')
-            ->with('equipment', $equipment);
+            ->with('equipment', $equipment)
+            ->with('equipment_type', $equipment_type)
+            ->with('situation', $situation);
     }
 
     /**
@@ -49,7 +54,7 @@ class EquipmentController extends AppBaseController
         $situation = Situation::pluck('name', 'id');
 
         return view('equipment.create')
-            ->with('situation', $situation)
+            ->with('status_type', $situation)
             ->with('equipment_type', $equipment_type);
     }
 
@@ -81,6 +86,7 @@ class EquipmentController extends AppBaseController
     public function show($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
+        
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -88,7 +94,9 @@ class EquipmentController extends AppBaseController
             return redirect(route('equipment.index'));
         }
 
-        return view('equipment.show')->with('equipment', $equipment);
+        return view('equipment.show')
+        ->with('equipment', $equipment);
+        
     }
 
     /**
@@ -101,6 +109,8 @@ class EquipmentController extends AppBaseController
     public function edit($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
+        $equipment_type = EquipmentType::pluck('name', 'id');
+        $situation = Situation::pluck('name', 'id');
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -108,7 +118,10 @@ class EquipmentController extends AppBaseController
             return redirect(route('equipment.index'));
         }
 
-        return view('equipment.edit')->with('equipment', $equipment);
+        return view('equipment.edit')
+        ->with('equipment', $equipment)
+        ->with('status_type', $situation)
+        ->with('equipment_type', $equipment_type);
     }
 
     /**

@@ -48,5 +48,8 @@ class Situation extends Model
         'name' => 'required'
     ];
 
-    
+     //situation type hasMany equipments
+     public function equipment() {
+        return $this->hasMany('App\Models\Equipment');
+    }
 }

@@ -19,7 +19,7 @@ class CreateEquipmentsTable extends Migration
             $table->string('model');
             $table->string('serialnumber');
             $table->string('equipment_type_id');
-            $table->string('status');
+            $table->string('situation_id');
             $table->softDeletes();
             $table->timestamps();
         });

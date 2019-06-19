@@ -3,8 +3,8 @@
         <thead>
             <tr>
                 <th>Employee Id</th>
-        <th>Lastname</th>
-        <th>Firstname</th>
+                <th>Last Name</th>
+                <th>First Name</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>

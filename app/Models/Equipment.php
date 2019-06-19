@@ -34,7 +34,7 @@ class Equipment extends Model
         'model',
         'serialnumber',
         'equipment_type_id',
-        'status'
+        'situation_id'
     ];
 
     /**
@@ -48,7 +48,7 @@ class Equipment extends Model
         'model' => 'string',
         'serialnumber' => 'string',
         'equipment_type_id' => 'string',
-        'status' => 'string'
+        'situation_id' => 'string'
     ];
 
     /**
@@ -61,7 +61,7 @@ class Equipment extends Model
         'model' => 'required',
         'serialnumber' => 'required',
         'equipment_type_id' => 'required',
-        'status' => 'required'
+        'situation_id' => 'required'
     ];
 
     
@@ -69,6 +69,12 @@ class Equipment extends Model
      public function equipment_type() {
         return $this->belongsTo('App\Models\EquipmentType');
     }
+
+    //an equipment can only belong to a status
+     public function situation() {
+        return $this->belongsTo('App\Models\Situation');
+    }
+     
 
     //  //a booking can has one room
     //  public function room() {

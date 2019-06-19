@@ -3,10 +3,10 @@
         <thead>
             <tr>
                 <th>Name</th>
-        <th>Model</th>
-        <th>Serialnumber</th>
-        <th>Equipment Type Id</th>
-        <th>Status</th>
+                <th>Model</th>
+                <th>Serial Number</th>
+                <th>Type</th>
+                <th>Status</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -14,10 +14,10 @@
         @foreach($equipment as $equipment)
             <tr>
                 <td>{!! $equipment->name !!}</td>
-            <td>{!! $equipment->model !!}</td>
-            <td>{!! $equipment->serialnumber !!}</td>
-            <td>{!! $equipment->equipment_type_id !!}</td>
-            <td>{!! $equipment->status !!}</td>
+                <td>{!! $equipment->model !!}</td>
+                <td>{!! $equipment->serialnumber !!}</td>
+                <td>{!! $equipment->equipment_type->name !!}</td>
+                <td>{!! $equipment->situation->name !!}</td>
                 <td>
                     {!! Form::open(['route' => ['equipment.destroy', $equipment->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

@@ -51,7 +51,7 @@ class EquipmentType extends Model
     
      //equipment type hasMany equipments
      public function equipment() {
-        return $this->hasManay('App\Models\Equipment');
+        return $this->hasMany('App\Models\Equipment');
     }
 
     //  //a booking can has one room

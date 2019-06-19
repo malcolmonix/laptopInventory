@@ -18,20 +18,20 @@
 
 <!-- Serialnumber Field -->
 <div class="form-group">
-    {!! Form::label('serialnumber', 'Serialnumber:') !!}
+    {!! Form::label('serialnumber', 'Serial Number:') !!}
     <p>{!! $equipment->serialnumber !!}</p>
 </div>
 
 <!-- Equipment Type Id Field -->
 <div class="form-group">
-    {!! Form::label('equipment_type_id', 'Equipment Type Id:') !!}
+    {!! Form::label('equipment_type_id', 'Equipment Type:') !!}
     <p>{!! $equipment->equipment_type_id !!}</p>
 </div>
 
 <!-- Status Field -->
 <div class="form-group">
     {!! Form::label('status', 'Status:') !!}
-    <p>{!! $equipment->status !!}</p>
+    <p>{!! $equipment->situation_id !!}</p>
 </div>
 
 <!-- Deleted At Field -->

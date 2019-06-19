@@ -12,7 +12,7 @@
 
 <!-- Serialnumber Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('serialnumber', 'Serialnumber:') !!}
+    {!! Form::label('serialnumber', 'Serial Number:') !!}
     {!! Form::text('serialnumber', null, ['class' => 'form-control']) !!}
 </div>
 
