@@ -1,8 +1,11 @@
 <li class="{{ Request::is('users*') ? 'active' : '' }}">
     <a href="{!! route('users.index') !!}"><i class="fa fa-edit"></i><span>Dashboard</span></a>
 </li>
+<li class="{{ Request::is('equipment*') ? 'active' : '' }}">
+    <a href="{!! route('equipment.index') !!}"><i class="fa fa-edit"></i><span>Equipment</span></a>
+</li>
 <li class="{{ Request::is('inventoryHistories*') ? 'active' : '' }}">
-    <a href="{!! route('inventoryHistories.index') !!}"><i class="fa fa-edit"></i><span>Inventory</span></a>
+    <a href="{!! route('inventoryHistories.index') !!}"><i class="fa fa-edit"></i><span>Manage Inventory</span></a>
 </li>
 
 
@@ -23,9 +26,7 @@
     <a href="{!! route('employees.index') !!}"><i class="fa fa-edit"></i><span>Employee</span></a>
 </li>
 
-<li class="{{ Request::is('equipment*') ? 'active' : '' }}">
-    <a href="{!! route('equipment.index') !!}"><i class="fa fa-edit"></i><span>Equipment</span></a>
-</li>
+
 
 <li class="{{ Request::is('equipmentTypes*') ? 'active' : '' }}">
     <a href="{!! route('equipmentTypes.index') !!}"><i class="fa fa-edit"></i><span>Type</span></a>

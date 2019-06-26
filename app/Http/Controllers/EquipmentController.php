@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateEquipmentRequest;
 use App\Http\Requests\UpdateEquipmentRequest;
 use App\Repositories\EquipmentRepository;
@@ -32,15 +33,18 @@ class EquipmentController extends AppBaseController
     public function index(Request $request)
     {
         $this->equipmentRepository->pushCriteria(new RequestCriteria($request));
-        $equipment = $this->equipmentRepository->all();
-        $equipment_type = EquipmentType::pluck('name', 'id');
-        $situation = Situation::pluck('name', 'id');
+        $equipment = DB::table('equipments as e')
+                    ->join('situations as s','e.situation_id','=','s.id' )
+                    ->join('employees as em','e.user_id','=','em.id' )
+                    ->join('equipment_types as et','e.equipment_type_id','=','et.id' )
+                    ->select('e.name as name','e.model','e.serialnumber','e.id','et.name as equipment_type','em.name as employee','s.name as status','e.deleted_at','e.created_at','e.updated_at')
+                    ->orderBy('e.name','asc')
+                    ->get();
 
+       
 
-        return view('equipment.index')
-            ->with('equipment', $equipment)
-            ->with('equipment_type', $equipment_type)
-            ->with('situation', $situation);
+           return view('equipment.index')
+            ->with('equipment', $equipment);
     }
 
     /**
@@ -54,7 +58,7 @@ class EquipmentController extends AppBaseController
         $situation = Situation::pluck('name', 'id');
 
         return view('equipment.create')
-            ->with('status_type', $situation)
+            ->with('situation', $situation)
             ->with('equipment_type', $equipment_type);
     }
 
@@ -68,12 +72,19 @@ class EquipmentController extends AppBaseController
     public function store(CreateEquipmentRequest $request)
     {
         $input = $request->all();
+        
+        if (DB::table('equipments')->where('name',request('name'))->where('deleted_at',null)->exists() == false) {
+            $equipment = $this->equipmentRepository->create($input);
+            Flash::success('Equipment saved successfully.');
 
-        $equipment = $this->equipmentRepository->create($input);
-
-        Flash::success('Equipment saved successfully.');
-
-        return redirect(route('equipment.index'));
+            
+            return redirect(route('equipment.index'));
+        }
+        else
+        {
+            Flash::error('Already existing equipment');
+            return redirect(route('equipment.index'));
+        }
     }
 
     /**
@@ -86,7 +97,8 @@ class EquipmentController extends AppBaseController
     public function show($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
-        
+        $equipment_type = EquipmentType::pluck('name', 'id');
+        $situation = Situation::pluck('name', 'id');
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -95,8 +107,9 @@ class EquipmentController extends AppBaseController
         }
 
         return view('equipment.show')
-        ->with('equipment', $equipment);
-        
+        ->with('equipment', $equipment)
+        ->with('situation', $situation)
+        ->with('equipment_type', $equipment_type);
     }
 
     /**
@@ -120,7 +133,7 @@ class EquipmentController extends AppBaseController
 
         return view('equipment.edit')
         ->with('equipment', $equipment)
-        ->with('status_type', $situation)
+        ->with('situation', $situation)
         ->with('equipment_type', $equipment_type);
     }
 
@@ -159,17 +172,27 @@ class EquipmentController extends AppBaseController
     public function destroy($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
+        
+        if (DB::table('inventory_histories')->where('equipment_id',$id)->exists() == false) 
+        {
 
-        if (empty($equipment)) {
-            Flash::error('Equipment not found');
+            if (empty($equipment)) {
+                Flash::error('Equipment not found');
+
+                return redirect(route('equipment.index'));
+            }
+
+            $this->equipmentRepository->delete($id);
+
+            Flash::success('Equipment deleted successfully.');
 
             return redirect(route('equipment.index'));
         }
+        else
+        {
+            Flash::error('Equipment has history cannot be deleted.');
 
-        $this->equipmentRepository->delete($id);
-
-        Flash::success('Equipment deleted successfully.');
-
-        return redirect(route('equipment.index'));
+            return redirect(route('equipment.index'));
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateEquipmentTypeRequest;
 use App\Http\Requests\UpdateEquipmentTypeRequest;
 use App\Repositories\EquipmentTypeRepository;
@@ -57,11 +58,19 @@ class EquipmentTypeController extends AppBaseController
     {
         $input = $request->all();
 
-        $equipmentType = $this->equipmentTypeRepository->create($input);
+        if(DB::table('equipment_types')->where('name',request('name'))->where('deleted_at', null)->exists() == false)
+        {
+            $equipmentType = $this->equipmentTypeRepository->create($input);
 
-        Flash::success('Equipment Type saved successfully.');
+            Flash::success('Equipment Type saved successfully.');
 
-        return redirect(route('equipmentTypes.index'));
+            return redirect(route('equipmentTypes.index'));
+        }
+        else
+        {
+            Flash::error('Equipment Type Already exist');
+            return redirect(route('equipmentTypes.index'));
+        }
     }
 
     /**

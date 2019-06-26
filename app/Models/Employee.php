@@ -29,8 +29,7 @@ class Employee extends Model
 
     public $fillable = [
         'employee_id',
-        'lastname',
-        'firstname'
+        'name'
     ];
 
     /**
@@ -41,8 +40,7 @@ class Employee extends Model
     protected $casts = [
         'id' => 'integer',
         'employee_id' => 'string',
-        'lastname' => 'string',
-        'firstname' => 'string'
+        'name' => 'string'
     ];
 
     /**
@@ -52,9 +50,10 @@ class Employee extends Model
      */
     public static $rules = [
         'employee_id' => 'required',
-        'lastname' => 'required',
-        'firstname' => 'required'
+        'name' => 'required'
     ];
-
+    public function inventoryhistory(){
+        return $this->hasMany('App\Models\InventoryHistory');
+    }
     
 }

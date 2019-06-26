@@ -1,68 +1,86 @@
+<div class="form-horizontal">
 <!-- Issue Date Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('issue_date', 'Issue Date:') !!}
+<div class="form-group">
+    {!! Form::label('issue_date', 'Issue Date:',['class' => 'col-sm-3 control-label']) !!}
+    <div class="col-sm-8">
     {!! Form::date('issue_date', null, ['class' => 'form-control','id'=>'issue_date']) !!}
+    </div>
 </div>
 
 @section('scripts')
     <script type="text/javascript">
-        $('#issue_date').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false
+        $('#issue_date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            format: "yyyy/mm/dd"
         })
     </script>
 @endsection
 
 <!-- Employee Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('employee_id', 'Employee Id:') !!}
-    {!! Form::text('employee_id', null, ['class' => 'form-control']) !!}
+<div class="form-group">
+        {!! Form::label('employee_id', 'Employee:',['class' => 'col-sm-3 control-label']) !!}
+     <div class="col-sm-8">
+       {!! Form::select('employee_id', $employee, null, ['class' => 'form-control']) !!}     
+    </div>
 </div>
 
 <!-- Equipment Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('equipment_id', 'Equipment Id:') !!}
-    {!! Form::text('equipment_id', null, ['class' => 'form-control']) !!}
+<div class="form-group">
+    {!! Form::label('equipment_id', 'Equipment:',['class' => 'col-sm-3 control-label']) !!}
+     <div class="col-sm-8">
+         {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
+</div>
 </div>
 
 <!-- Project Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('project_id', 'Project Id:') !!}
-    {!! Form::text('project_id', null, ['class' => 'form-control']) !!}
+<div class="form-group">
+  {!! Form::label('project_id', 'Project:',['class' => 'col-sm-3 control-label']) !!}
+ 
+  <div class="col-sm-8">
+     {!! Form::select('project_id', $project, null, ['class' => 'form-control']) !!}
+  </div>
 </div>
 
 <!-- Situation Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('situation_id', 'Situation Id:') !!}
-    {!! Form::text('situation_id', null, ['class' => 'form-control']) !!}
+<div class="form-group">
+    {!! Form::label('situation_id', 'Status:',['class' => 'col-sm-3 control-label']) !!}
+    <div class="col-sm-8">
+       {!! Form::select('situation_id', $situation, null, ['class' => 'form-control']) !!}
+ </div>
 </div>
 
 <!-- Projectto Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('projectTo_id', 'Projectto Id:') !!}
-    {!! Form::text('projectTo_id', null, ['class' => 'form-control']) !!}
+<div class="form-group">
+    {!! Form::label('projectTo_id', 'Project To:',['class' => 'col-sm-3 control-label']) !!}
+    <div class="col-sm-8">
+        {!! Form::select('projectTo_id', $project, null, ['class' => 'form-control']) !!}
+</div>
 </div>
 
 <!-- Approvedby Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('approvedby', 'Approvedby:') !!}
+<div class="form-group">
+    {!! Form::label('approvedby', 'Approved by:',['class' => 'col-sm-3 control-label']) !!}
+    <div class="col-sm-8">
     {!! Form::text('approvedby', null, ['class' => 'form-control']) !!}
+</div>
 </div>
 
 <!-- Remarks Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('remarks', 'Remarks:') !!}
-    {!! Form::text('remarks', null, ['class' => 'form-control']) !!}
+<div class="form-group">
+    {!! Form::label('remarks', 'Remark:',['class' => 'col-sm-3 control-label']) !!}
+    <div class="col-sm-8">
+    {!! Form::textarea('remarks', null, ['class' => 'form-control']) !!}
+</div>
 </div>
 
-<!-- User Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::text('user_id', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Submit Field -->
-<div class="form-group col-sm-12">
+<div class="form-group">
+ <div class="col-sm-offset-2 col-sm-10">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
+</div>
+</div>
 </div>

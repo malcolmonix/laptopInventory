@@ -12,15 +12,10 @@
 
 <!-- Lastname Field -->
 <div class="form-group">
-    {!! Form::label('lastname', 'Lastname:') !!}
-    <p>{!! $employee->lastname !!}</p>
+    {!! Form::label('name', 'name:') !!}
+    <p>{!! $employee->name !!}</p>
 </div>
 
-<!-- Firstname Field -->
-<div class="form-group">
-    {!! Form::label('firstname', 'Firstname:') !!}
-    <p>{!! $employee->firstname !!}</p>
-</div>
 
 <!-- Deleted At Field -->
 <div class="form-group">

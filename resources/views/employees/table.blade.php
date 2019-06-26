@@ -3,8 +3,7 @@
         <thead>
             <tr>
                 <th>Employee Id</th>
-                <th>Last Name</th>
-                <th>First Name</th>
+                <th>Name</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -12,9 +11,8 @@
         @foreach($employees as $employee)
             <tr>
                 <td>{!! $employee->employee_id !!}</td>
-            <td>{!! $employee->lastname !!}</td>
-            <td>{!! $employee->firstname !!}</td>
-                <td>
+            <td>{!! $employee->name !!}</td>
+              <td>
                     {!! Form::open(['route' => ['employees.destroy', $employee->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{!! route('employees.show', [$employee->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>

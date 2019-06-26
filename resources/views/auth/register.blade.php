@@ -38,7 +38,7 @@
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">Register a new User</p>
 
         <form method="post" action="{{ url('/register') }}">
 
@@ -104,7 +104,7 @@
             </div>
         </form>
 
-        <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
+        <a href="{{ url('/login') }}" class="text-center">I already have an account</a>
     </div>
     <!-- /.form-box -->
 </div>

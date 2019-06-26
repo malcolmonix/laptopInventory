@@ -22,11 +22,7 @@
         {!! Form::select('equipment_type_id', $equipment_type, null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Status Field -->
-<div class="form-group col-sm-6">
-        {!! Form::label('status', 'Status:') !!}
-        {!! Form::select('status', $situation, null, ['class' => 'form-control']) !!}
-</div>
+
 
 
 <!-- Submit Field -->

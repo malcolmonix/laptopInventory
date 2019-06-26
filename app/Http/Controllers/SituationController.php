@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateSituationRequest;
 use App\Http\Requests\UpdateSituationRequest;
 use App\Repositories\SituationRepository;
@@ -34,7 +35,7 @@ class SituationController extends AppBaseController
         $situations = $this->situationRepository->all();
 
         return view('situations.index')
-            ->with('situations', $situations);
+            ->with('situation', $situations);
     }
 
     /**
@@ -57,12 +58,24 @@ class SituationController extends AppBaseController
     public function store(CreateSituationRequest $request)
     {
         $input = $request->all();
+        $sta = DB::table('situations')
+        ->where('name',request('name'))
+        ->where('deleted_at',null)
+        ->exists();
 
-        $situation = $this->situationRepository->create($input);
+        if($sta == false)
+        {
+            $situation = $this->situationRepository->create($input);
 
-        Flash::success('Situation saved successfully.');
+            Flash::success('Status saved successfully.');
 
-        return redirect(route('situations.index'));
+            return redirect(route('situations.index'));
+        }
+        else
+        {
+            Flash::error('Status already exist');
+            return redirect(route('situations.index'));
+        }
     }
 
     /**
@@ -77,12 +90,12 @@ class SituationController extends AppBaseController
         $situation = $this->situationRepository->findWithoutFail($id);
 
         if (empty($situation)) {
-            Flash::error('Situation not found');
+            Flash::error('Status not found');
 
             return redirect(route('situations.index'));
         }
 
-        return view('situations.show')->with('situation', $situation);
+        return view('situations.show')->with('situations', $situation);
     }
 
     /**
@@ -97,7 +110,7 @@ class SituationController extends AppBaseController
         $situation = $this->situationRepository->findWithoutFail($id);
 
         if (empty($situation)) {
-            Flash::error('Situation not found');
+            Flash::error('Status not found');
 
             return redirect(route('situations.index'));
         }
@@ -118,14 +131,14 @@ class SituationController extends AppBaseController
         $situation = $this->situationRepository->findWithoutFail($id);
 
         if (empty($situation)) {
-            Flash::error('Situation not found');
+            Flash::error('Status not found');
 
             return redirect(route('situations.index'));
         }
 
         $situation = $this->situationRepository->update($request->all(), $id);
 
-        Flash::success('Situation updated successfully.');
+        Flash::success('Status updated successfully.');
 
         return redirect(route('situations.index'));
     }
@@ -142,14 +155,14 @@ class SituationController extends AppBaseController
         $situation = $this->situationRepository->findWithoutFail($id);
 
         if (empty($situation)) {
-            Flash::error('Situation not found');
+            Flash::error('Status not found');
 
             return redirect(route('situations.index'));
         }
 
         $this->situationRepository->delete($id);
 
-        Flash::success('Situation deleted successfully.');
+        Flash::success('Status deleted successfully.');
 
         return redirect(route('situations.index'));
     }

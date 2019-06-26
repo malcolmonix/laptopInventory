@@ -60,8 +60,7 @@ class Equipment extends Model
         'name' => 'required',
         'model' => 'required',
         'serialnumber' => 'required',
-        'equipment_type_id' => 'required',
-        'situation_id' => 'required'
+        'equipment_type_id' => 'required'
     ];
 
     
@@ -75,7 +74,9 @@ class Equipment extends Model
         return $this->belongsTo('App\Models\Situation');
     }
      
-
+    public function inventoryHistory(){
+        return $this->hasMany('App\Models\InventoryHistory');
+    }
     //  //a booking can has one room
     //  public function room() {
     //     return $this->hasOne('App\Models\Room');

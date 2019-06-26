@@ -52,5 +52,8 @@ class Project extends Model
         'name' => 'required'
     ];
 
+    public function inventoryhistory(){
+        return $this->hasMany('App\Models\InventoryHistory');
+    }
     
 }

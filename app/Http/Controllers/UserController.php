@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
@@ -57,11 +57,22 @@ class UserController extends AppBaseController
     {
         $input = $request->all();
 
-        $user = $this->userRepository->create($input);
+        if(DB::table('users')
+            ->where('email',request('email'))
+            ->where('deleted_at',null)
+            ->exists() == false)
+        {
+            $user = $this->userRepository->create($input);
 
-        Flash::success('User saved successfully.');
+            Flash::success('User saved successfully.');
 
-        return redirect(route('users.index'));
+            return redirect(route('users.index'));
+        }
+        else
+        {
+            Flash::error('User already exist');
+            return redirect(route('users.index'));
+        }
     }
 
     /**

@@ -59,8 +59,7 @@ class InventoryHistory extends Model
         'situation_id' => 'string',
         'projectTo_id' => 'string',
         'approvedby' => 'string',
-        'remarks' => 'string',
-        'user_id' => 'string'
+        'remarks' => 'string'
     ];
 
     /**
@@ -68,17 +67,30 @@ class InventoryHistory extends Model
      *
      * @var array
      */
+    
     public static $rules = [
         'issue_date' => 'required',
         'employee_id' => 'required',
         'equipment_id' => 'required',
         'project_id' => 'required',
-        'situation_id' => 'required',
-        'projectTo_id' => 'required',
-        'approvedby' => 'required',
-        'remarks' => 'required',
-        'user_id' => 'required'
+        'situation_id' => 'required'
+        
     ];
 
+    //an inventory can only belong to a equipment
+     public function equipment() {
+        return $this->belongsTo('App\Models\Equipment');
+    }
+
+    public function situation() {
+        return $this->belongsTo('App\Models\Situation');
+    }
+
+    public function employee() {
+        return $this->belongsTo('App\Models\Employee');
+    }
     
+    public function project() {
+        return $this->belongsTo('App\Models\Project');
+    }
 }

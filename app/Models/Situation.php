@@ -52,4 +52,8 @@ class Situation extends Model
      public function equipment() {
         return $this->hasMany('App\Models\Equipment');
     }
+
+    public function inventoryhistory(){
+        return $this->hasMany('App\Models\InventoryHistory');
+    }
 }

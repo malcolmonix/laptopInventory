@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Inventory History
+            Manage Inventory
         </h1>
    </section>
    <div class="content">

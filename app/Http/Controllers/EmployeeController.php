@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Repositories\EmployeeRepository;
@@ -56,12 +57,24 @@ class EmployeeController extends AppBaseController
     public function store(CreateEmployeeRequest $request)
     {
         $input = $request->all();
+        $emp = DB::table('employees')
+        ->where('employee_id',request('employee_id'))
+        ->where('deleted_at',null)
+        ->exists();
+        
+        if($emp == false)
+        {
+            $employee = $this->employeeRepository->create($input);
 
-        $employee = $this->employeeRepository->create($input);
+            Flash::success('Employee saved successfully.');
 
-        Flash::success('Employee saved successfully.');
-
-        return redirect(route('employees.index'));
+            return redirect(route('employees.index'));
+        }
+        else
+        {
+            Flash::error('Employee Already exist');
+            return redirect(route('employees.index'));
+        }
     }
 
     /**

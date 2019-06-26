@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Repositories\ProjectRepository;
@@ -56,12 +57,23 @@ class ProjectController extends AppBaseController
     public function store(CreateProjectRequest $request)
     {
         $input = $request->all();
-
-        $project = $this->projectRepository->create($input);
-
-        Flash::success('Project saved successfully.');
-
-        return redirect(route('projects.index'));
+        $project = DB::table('projects')
+        ->where('code',request('code'))
+        ->where('deleted_at',null)
+        ->exists();
+        
+        if ($project == false) {
+            $project = $this->projectRepository->create($input);
+            Flash::success('Project saved successfully.');
+            
+            return redirect(route('projects.index'));
+        }
+        else
+        {
+            Flash::error(request('code') .' already existing project');
+            return redirect(route('projects.index'));
+        }
+        
     }
 
     /**
