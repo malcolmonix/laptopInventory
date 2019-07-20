@@ -1,10 +1,10 @@
+@section('title', 'User')
 <div class="table-responsive">
     <table class="table" id="users-table">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Password</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -13,8 +13,7 @@
             <tr>
                 <td>{!! $user->name !!}</td>
                 <td>{!! $user->email !!}</td>
-                <td>{!! $user->password !!}</td>
-            <td>
+           <td>
                     {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{!! route('users.show', [$user->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>

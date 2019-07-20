@@ -1,3 +1,4 @@
+@section('title', 'Project')
 <div class="table-responsive">
     <table class="table" id="projects-table">
         <thead>

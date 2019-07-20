@@ -22,7 +22,10 @@
         {!! Form::select('equipment_type_id', $equipment_type, null, ['class' => 'form-control']) !!}
 </div>
 
-
+<div class="form-group col-sm-6">
+    {!! Form::label('comment', 'Comment:') !!}
+    {!! Form::text('comment', null, ['class' => 'form-control']) !!}
+</div>
 
 
 <!-- Submit Field -->

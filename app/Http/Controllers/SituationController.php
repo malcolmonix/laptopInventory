@@ -21,6 +21,7 @@ class SituationController extends AppBaseController
     public function __construct(SituationRepository $situationRepo)
     {
         $this->situationRepository = $situationRepo;
+        $this->middleware('auth');
     }
 
     /**
@@ -35,7 +36,7 @@ class SituationController extends AppBaseController
         $situations = $this->situationRepository->all();
 
         return view('situations.index')
-            ->with('situation', $situations);
+            ->with('situations', $situations);
     }
 
     /**
@@ -58,6 +59,8 @@ class SituationController extends AppBaseController
     public function store(CreateSituationRequest $request)
     {
         $input = $request->all();
+        
+
         $sta = DB::table('situations')
         ->where('name',request('name'))
         ->where('deleted_at',null)

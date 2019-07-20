@@ -1,3 +1,4 @@
+@section('title', 'Equipment Status')
 <div class="table-responsive">
     <table class="table" id="situations-table">
         <thead>

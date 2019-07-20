@@ -18,10 +18,13 @@ class EquipmentController extends AppBaseController
 {
     /** @var  EquipmentRepository */
     private $equipmentRepository;
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
     public function __construct(EquipmentRepository $equipmentRepo)
     {
         $this->equipmentRepository = $equipmentRepo;
+        $this->middleware('auth');
     }
 
     /**
@@ -35,9 +38,8 @@ class EquipmentController extends AppBaseController
         $this->equipmentRepository->pushCriteria(new RequestCriteria($request));
         $equipment = DB::table('equipments as e')
                     ->join('situations as s','e.situation_id','=','s.id' )
-                    ->join('employees as em','e.user_id','=','em.id' )
                     ->join('equipment_types as et','e.equipment_type_id','=','et.id' )
-                    ->select('e.name as name','e.model','e.serialnumber','e.id','et.name as equipment_type','em.name as employee','s.name as status','e.deleted_at','e.created_at','e.updated_at')
+                    ->select('e.name as name','e.model','e.serialnumber','e.id','et.name as equipment_type','s.name as status','e.comment','e.deleted_at','e.created_at','e.updated_at')
                     ->orderBy('e.name','asc')
                     ->get();
 
@@ -72,9 +74,27 @@ class EquipmentController extends AppBaseController
     public function store(CreateEquipmentRequest $request)
     {
         $input = $request->all();
+        $input['situation_id'] = '2';
+        $input['user_id'] = auth()->id();
         
+        $date = date("Y-m-d");
+        
+       
+
         if (DB::table('equipments')->where('name',request('name'))->where('deleted_at',null)->exists() == false) {
-            $equipment = $this->equipmentRepository->create($input);
+            DB::table('equipments')->insert(
+               [
+                    'name'=>request('name'), 'model'=>request('model'), 
+                    'serialnumber'=>request('serialnumber'),'equipment_type_id'=>request('equipment_type_id'),
+                    'situation_id'=>$input['situation_id'],'user_id'=>$input['user_id'],'comment'=>$input['comment'],'created_at'=>$date,
+                    'updated_at'=>$date
+               ]
+            );
+            
+            
+            
+            
+            //$equipment = $this->equipmentRepository->create($input);
             Flash::success('Equipment saved successfully.');
 
             
@@ -148,6 +168,10 @@ class EquipmentController extends AppBaseController
     public function update($id, UpdateEquipmentRequest $request)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
+        $equipment['comment'] = request("comment");
+        $equipment['user_id'] = auth()->id();
+        
+        $date = date("Y-m-d");
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -155,7 +179,17 @@ class EquipmentController extends AppBaseController
             return redirect(route('equipment.index'));
         }
 
-        $equipment = $this->equipmentRepository->update($request->all(), $id);
+
+        DB::table('equipments')->where('id','=',$id)->update(
+            [
+                 'name'=>request('name'), 'model'=>request('model'), 
+                 'serialnumber'=>request('serialnumber'),'equipment_type_id'=>request('equipment_type_id'),
+                 'user_id'=>$equipment['user_id'],'comment'=>$equipment['comment'],'created_at'=>$date,
+                 'updated_at'=>$date
+            ]
+         );
+
+        //$equipment = $this->equipmentRepository->update($request->all(), $id);
 
         Flash::success('Equipment updated successfully.');
 

@@ -21,6 +21,7 @@ class CreateEquipmentsTable extends Migration
             $table->string('equipment_type_id');
             $table->string('situation_id');
             $table->string('user_id');
+            $table->string('comment');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -1,3 +1,4 @@
+@section('title', 'Manage')
 <div class="table-responsive">
     <table class="table" id="inventoryHistories-table">
         <thead>

@@ -12,17 +12,22 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/dashboard', 'DashboardPagesController@index');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
 Auth::routes();
 
+//Route::get('/', 'DashboardPagesController@index');
+
 Route::get('/home', 'HomeController@index');
+
+route::resource('dashboard','DashboardPagesController');
 
 Route::resource('users', 'UserController');
 

@@ -25,7 +25,9 @@ class InventoryHistoryController extends AppBaseController
     public function __construct(InventoryHistoryRepository $inventoryHistoryRepo)
     {
         $this->inventoryHistoryRepository = $inventoryHistoryRepo;
+        $this->middleware('auth');
     }
+
 
     /**
      * Display a listing of the InventoryHistory.

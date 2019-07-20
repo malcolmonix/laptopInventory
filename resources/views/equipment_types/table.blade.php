@@ -1,3 +1,4 @@
+@section('title', 'Equipment Type')
 <div class="table-responsive">
     <table class="table" id="equipmentTypes-table">
         <thead>

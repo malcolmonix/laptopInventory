@@ -19,6 +19,7 @@ class UserController extends AppBaseController
     public function __construct(UserRepository $userRepo)
     {
         $this->userRepository = $userRepo;
+        $this->middleware('auth');
     }
 
     /**
@@ -56,6 +57,7 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         $input = $request->all();
+        $input['active'] = '1';
 
         if(DB::table('users')
             ->where('email',request('email'))

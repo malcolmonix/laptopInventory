@@ -20,6 +20,7 @@ class EmployeeController extends AppBaseController
     public function __construct(EmployeeRepository $employeeRepo)
     {
         $this->employeeRepository = $employeeRepo;
+        $this->middleware('auth');
     }
 
     /**
@@ -57,6 +58,8 @@ class EmployeeController extends AppBaseController
     public function store(CreateEmployeeRequest $request)
     {
         $input = $request->all();
+        $input['active'] = '1';
+
         $emp = DB::table('employees')
         ->where('employee_id',request('employee_id'))
         ->where('deleted_at',null)
@@ -64,7 +67,16 @@ class EmployeeController extends AppBaseController
         
         if($emp == false)
         {
-            $employee = $this->employeeRepository->create($input);
+            $date = date("Y-m-d");
+
+            DB::table('employees')->insert(
+                [
+                     'employee_id'=>request('employee_id'), 'name'=>request('name'), 
+                     'active'=>$input['active'],'created_at'=>$date,
+                     'updated_at'=>$date
+                ]
+             );
+           //$employee = $this->employeeRepository->create($input);
 
             Flash::success('Employee saved successfully.');
 
