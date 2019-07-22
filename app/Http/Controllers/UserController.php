@@ -57,13 +57,28 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         $input = $request->all();
-        $input['active'] = '1';
+        
+        $date = date("Y-m-d");
+
+       
 
         if(DB::table('users')
             ->where('email',request('email'))
             ->where('deleted_at',null)
             ->exists() == false)
         {
+            
+            //DB::table('users')->insert(
+             // [
+              //    'name'=>request('name'), 'email'=>request('email'), 
+             //     'password'=>bcrypt($request['password']),'active'=>('1'),
+             //     'remember_token'=>$request['remember_token'],
+             /////     'created_at'=>$date,
+             //     'updated_at'=>$date
+             //]
+            //);
+               
+            
             $user = $this->userRepository->create($input);
 
             Flash::success('User saved successfully.');

@@ -92,7 +92,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> I agree to the <a href="#">terms</a>
+                            <input type="checkbox" name="termsandconditions"> I agree to the <a href="#">terms</a>
                         </label>
                     </div>
                 </div>
