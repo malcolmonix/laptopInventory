@@ -1,7 +1,4 @@
 @extends('layouts.app')
-@section('css')
-<link href="/css/design-sheet.css" rel="stylesheet"/>
-@endsection
 @section('title', 'Dashboard')
 @section('content')
     <div class="page-content-wrap">
@@ -88,10 +85,10 @@
                         <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
                            data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
                     </div>
-                    <div class="widget-buttons widget-c1">
+                    <!--<div class="widget-buttons widget-c1">
                         <div class="col">
                             <p>Current Time And Date</p>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

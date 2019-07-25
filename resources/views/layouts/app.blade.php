@@ -8,6 +8,7 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -15,18 +16,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/AdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/skins/_all-skins.min.css">
 
+
     <!-- iCheck -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
-    <link href="/Codes/bootstrap/css/bootstrap-select.css" rel="stylesheet"/>
-    <link href="/Codes/plugins/datepicker/datepicker3.css" rel="stylesheet"/>
+    
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
-    
+
+
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/animate.css')}}"/>
+    <!--<link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/style.css')}}"/>-->
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/custom.css')}}"/>
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/datapicker/datepicker3.css')}}"/>
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/daterangepicker/daterangepicker-bs3.css')}}"/>
+
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/sweetalert/sweetalert.css')}}"/>
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/toastr/toastr.min.css')}}"/>
+
+
+
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/design-sheet.css')}}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     @yield('css')
 </head>
 
@@ -38,7 +53,7 @@
 
             <!-- Logo -->
             <a href="#" class="logo">
-                <b>Inventory</b>
+                <b>VKS</b>
             </a>
 
             <!-- Header Navbar -->
@@ -157,17 +172,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/Codes/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="/Codes/bootstrap/js/bootstrap-select.js"></script>
+   
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/js/adminlte.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+    <script type="text/javascript" src="/js/clock.js"></script>
+    <audio id="audio-alert" src="{{asset('backend/audio/alert.mp3')}}" preload="auto"></audio>
+<audio id="audio-fail" src="{{asset('backend/audio/fail.mp3')}}" preload="auto"></audio>
+<!-- END PRELOADS -->
+
+<!-- START SCRIPTS -->
+<!-- START PLUGINS -->
+<script type="text/javascript" src="{{asset('backend/js/plugins/jquery/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/jquery/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap/bootstrap.min.js')}}"></script>
+<!-- END PLUGINS -->
+
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='{{asset('backend/js/plugins/icheck/icheck.min.js')}}'></script>
+<script type="text/javascript"
+        src="{{asset('backend/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/scrolltotop/scrolltopcontrol.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('backend/js/plugins/morris/raphael-min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/morris/morris.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/rickshaw/d3.v3.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/rickshaw/rickshaw.min.js')}}"></script>
+<script type='text/javascript' src="{{asset('backend/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
+<script type='text/javascript'
+        src="{{asset('backend/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}'></script>
+<script type='text/javascript' src="{{asset('backend/js/plugins/bootstrap/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/owl/owl.carousel.min.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('backend/js/plugins/moment.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- END THIS PAGE PLUGINS-->
+
+<!-- START TEMPLATE -->
+<script type="text/javascript" src="{{asset('backend/js/settings.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('backend/js/plugins.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/actions.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('backend/js/demo_dashboard.js')}}"></script>
 
 
-   
+<!-- THIS PAGE PLUGINS -->
+<script type='text/javascript' src="{{asset('backend/js/plugins/icheck/icheck.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset('backend/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap/bootstrap-file-input.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap/bootstrap-select.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/tagsinput/jquery.tagsinput.min.js')}}"></script>
+
+
+<script type="text/javascript" src="{{asset('backend/js/plugins/toastr/toastr.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+
+{{-- <script type="text/javascript" src="{{asset('js/jquery-3.4.1.min.js')}}"></script> --}}
 <!-- END PLUGINS -->
 
 <!-- START THIS PAGE PLUGINS-->
