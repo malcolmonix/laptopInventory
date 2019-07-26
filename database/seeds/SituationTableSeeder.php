@@ -19,7 +19,7 @@ class SituationTableSeeder extends Seeder
             'updated_at' => $dateNow
         ],
         [
-            'name'=>'RETURNED',
+            'name'=>'AVAILABLE',
             'created_at' => $dateNow,
             'updated_at' => $dateNow
         ],

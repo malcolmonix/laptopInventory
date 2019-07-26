@@ -91,6 +91,7 @@ class InventoryHistoryController extends AppBaseController
         $employeeid = request('employee_id');
         $statusid = request('situation_id');
         $equipmentid = request('equipment_id');
+        $projectid = request('project_id');
 
         /***
         $equipment_status_id = DB::table('equipments')
@@ -117,7 +118,7 @@ class InventoryHistoryController extends AppBaseController
 
             DB::table('equipments')
                 ->where('id',$equipmentid)
-                ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid]);
+                ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid,'project_id'=>$projectid]);
 
             
             Flash::success('Inventory saved successfully.');

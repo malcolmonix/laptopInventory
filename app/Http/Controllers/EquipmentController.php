@@ -75,7 +75,7 @@ class EquipmentController extends AppBaseController
     {
         $input = $request->all();
         $input['situation_id'] = '2';
-        $input['user_id'] = auth()->id();
+        //$input['user_id'] = auth()->id();
         
         $date = date("Y-m-d");
         
@@ -86,7 +86,7 @@ class EquipmentController extends AppBaseController
                [
                     'name'=>request('name'), 'model'=>request('model'), 
                     'serialnumber'=>request('serialnumber'),'equipment_type_id'=>request('equipment_type_id'),
-                    'situation_id'=>$input['situation_id'],'user_id'=>$input['user_id'],'comment'=>$input['comment'],'created_at'=>$date,
+                    'situation_id'=>$input['situation_id'],'comment'=>$input['comment'],'created_at'=>$date,
                     'updated_at'=>$date
                ]
             );

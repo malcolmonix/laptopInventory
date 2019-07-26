@@ -100,7 +100,8 @@
                     <tr>
                         <th>Sn</th>
                         <th>Employee</th>
-                        <th>Name</th>
+                        <th>Project</th>
+                        <th>Equipment Name</th>
                         <th>Model</th>
                         <th>Serial Number</th>
                         <th>Type</th>
@@ -113,6 +114,7 @@
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{$equipments->employee}}</td>
+                            <td>{{$equipments->project}}</td>
                             <td>{{$equipments->name}}</td>
                             <td>{{$equipments->model}}</td>
                             <td>{{$equipments->serialnumber}}</td>

@@ -20,7 +20,8 @@ class CreateEquipmentsTable extends Migration
             $table->string('serialnumber');
             $table->string('equipment_type_id');
             $table->string('situation_id');
-            $table->string('user_id');
+            $table->string('user_id')->default('');
+            $table->string('project_id')->default('');
             $table->string('comment');
             $table->softDeletes();
             $table->timestamps();
