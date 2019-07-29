@@ -17,6 +17,7 @@ use App\Models\Employee;
 use App\Models\Project;
 
 
+
 class InventoryHistoryController extends AppBaseController
 {
     /** @var  InventoryHistoryRepository */
@@ -91,33 +92,18 @@ class InventoryHistoryController extends AppBaseController
         $employeeid = request('employee_id');
         $statusid = request('situation_id');
         $equipmentid = request('equipment_id');
-
-        /***
-        $equipment_status_id = DB::table('equipments')
-        ->select('situation_id')
-        ->where('id',$equipmentid)
-        ->first();
         
-        $status = $equipment_status_id->situation_id;
-
-
-        dd($equipment_status_id->situation_id);
-
-        $inventoryalreadyexisted = DB::table('inventory_histories')
-        ->where('employee_id',request('employee_id'))
-        ->where('equipment_id',request('equipment_id'))
-        ->where('project_id',request('project_id'))
-        ->where('deleted_at',null)
-        ->exists();
-      ***/
 
    
             $inventoryHistory = $this->inventoryHistoryRepository->create($input);
-            $equipment = Equipment::find($equipmentid);
 
-            DB::table('equipments')
-                ->where('id',$equipmentid)
-                ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid]);
+            $equipment = Equipment::find($equipmentid);
+            $equipment->situation_id = $statusid;
+            $equipment->save();
+
+            // DB::table('equipments')
+            //     ->where('id',$equipmentid)
+            //     ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid]);
 
             
             Flash::success('Inventory saved successfully.');
@@ -193,6 +179,23 @@ class InventoryHistoryController extends AppBaseController
         }
 
         $inventoryHistory = $this->inventoryHistoryRepository->update($request->all(), $id);
+
+       $equipment = Equipment::find($inventoryHistory->equipment_id);
+       $situation = Situation::find($request->situation_id);
+
+       if($situation->name == 'RETURNED') {           
+           $sit = Situation::where('name', 'IN-STOCK')->first();           
+            $equipment->situation_id = $sit->id;
+        } else {
+            $equipment->situation_id = $request->situation_id;
+        }
+
+       
+      
+       $equipment->save();
+
+
+       
 
         Flash::success('Inventory updated successfully.');
 

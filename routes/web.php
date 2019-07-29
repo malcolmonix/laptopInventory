@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if(Auth::User()){
+        return redirect('/dashboard');
+    } else {
+        return view('auth.login');
+    }
 });
 
 Auth::routes();
@@ -27,20 +31,29 @@ Auth::routes();
 
 Route::get('home', 'HomeController@index');
 
-route::resource('dashboard','DashboardPagesController');
+Route::get('users/assign', 'UserController@assignIndex');
+Route::get('users/assign/create', 'UserController@Assigncreate');
+Route::get('users/assign/edit', 'UserController@editRole');
+Route::post('users/assign/update', 'UserController@updateRole');
 
-Route::resource('users', 'UserController');
 
-Route::resource('employees', 'EmployeeController');
 
-Route::resource('equipment', 'EquipmentController');
+route::resource('dashboard','DashboardPagesController')->middleware('checkofficer');
 
-Route::resource('equipmentTypes', 'EquipmentTypeController');
+Route::resource('users', 'UserController')->middleware('checkmanager');
 
-Route::resource('projects', 'ProjectController');
+Route::resource('employees', 'EmployeeController')->middleware('checkofficer');
 
-Route::resource('situations', 'SituationController');
+Route::resource('equipment', 'EquipmentController')->middleware('checkofficer');
 
-Route::resource('inventoryHistories', 'InventoryHistoryController');
+Route::resource('equipmentTypes', 'EquipmentTypeController')->middleware('checkofficer');
 
-Route::resource('projects', 'ProjectController');
+Route::resource('projects', 'ProjectController')->middleware('checkmanager');
+
+Route::resource('situations', 'SituationController')->middleware('checkadmin');
+
+Route::resource('inventoryHistories', 'InventoryHistoryController')->middleware('checkofficer');
+
+Route::resource('roles', 'RoleController')->middleware('checkadmin');
+
+Route::resource('brands', 'BrandController')->middleware('checkadmin');

@@ -53,7 +53,7 @@
 
             <!-- Logo -->
             <a href="#" class="logo">
-                <b>VKS</b>
+                <b>VKS IT Inventory</b>
             </a>
 
             <!-- Header Navbar -->

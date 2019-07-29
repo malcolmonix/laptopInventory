@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Equipment')
+
 @section('content')
     <section class="content-header">
         <h1>
-            Equipment
+            Add New Device Form
         </h1>
     </section>
     <div class="content">

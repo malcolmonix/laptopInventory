@@ -13,17 +13,17 @@
                         <div>
                             <div class="widget-title">Total Equipments</div>
                             <div class="widget-subtitle">{{\Carbon\Carbon::today()->diffForHumans()}}</div>
-                            <div class="widget-int">{{App\models\Equipment::count()}}</div>
+                            <div class="widget-int">{{App\Models\Equipment::count()}}</div>
                         </div>
                         <div>
                             <div class="widget-title">Available Equipments</div>
                             <div class="widget-subtitle">Available to Assign</div>
-                            <div class="widget-int">{{App\models\Equipment::where('situation_id','2')->count()}}</div>
+                            <div class="widget-int">{{App\Models\Equipment::where('situation_id','2')->count()}}</div>
                         </div>
                         <div>
                             <div class="widget-title">Assigned</div>
                             <div class="widget-subtitle">Currently Assigned</div>
-                            <div class="widget-int">{{App\models\Equipment::where('situation_id','1')->count()}}</div>
+                            <div class="widget-int">{{App\Models\Equipment::where('situation_id','1')->count()}}</div>
                         </div>
                     </div>
                     <div class="widget-controls">
@@ -42,7 +42,7 @@
                         <span class="fa fa-envelope"></span>
                     </div>
                     <div class="widget-data">
-                        <div class="widget-int num-count">{{App\models\Employee::where('active','1')->count()}}</div>
+                        <div class="widget-int num-count">{{App\Models\Employee::where('active','1')->count()}}</div>
                         <div class="widget-title">Employee</div>
                         <div class="widget-subtitle">With your Equipment</div>
                     </div>
@@ -63,7 +63,7 @@
                         <span class="fa fa-user"></span>
                     </div>
                     <div class="widget-data">
-                        <div class="widget-int num-count">{{App\models\User::where('active',1)->count()}}</div>
+                        <div class="widget-int num-count">{{App\Models\User::where('active',1)->count()}}</div>
                         <div class="widget-title">Registred users</div>
                         <div class="widget-subtitle">Active</div>
                     </div>
@@ -94,6 +94,7 @@
             </div>
         </div>
         <div class="row">
+            @include('flash::message')
             <div class="col-md-12">
                 <table class="table table-responsive table-bordered">
                     <thead>

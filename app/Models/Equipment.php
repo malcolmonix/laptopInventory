@@ -8,13 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Equipment
  * @package App\Models
- * @version June 18, 2019, 4:02 pm UTC
+ * @version July 26, 2019, 10:44 am UTC
  *
  * @property string name
  * @property string model
+ * @property integer brand_id
  * @property string serialnumber
- * @property string equipment_type_id
+ * @property integer equipment_type_id
+ * @property integer situation_id
  * @property string status
+ * @property integer user_id
+ * @property string computer_name
+ * @property string mac_address
+ * @property string ip_address
+ * @property string comment
  */
 class Equipment extends Model
 {
@@ -32,9 +39,16 @@ class Equipment extends Model
     public $fillable = [
         'name',
         'model',
+        'brand_id',
         'serialnumber',
         'equipment_type_id',
-        'situation_id'
+        'situation_id',
+        'status',
+        'user_id',
+        'computer_name',
+        'mac_address',
+        'ip_address',
+        'comment'
     ];
 
     /**
@@ -46,9 +60,16 @@ class Equipment extends Model
         'id' => 'integer',
         'name' => 'string',
         'model' => 'string',
+        'brand_id' => 'integer',
         'serialnumber' => 'string',
-        'equipment_type_id' => 'string',
-        'situation_id' => 'string'
+        'equipment_type_id' => 'integer',
+        'situation_id' => 'integer',
+        'status' => 'string',
+        'user_id' => 'integer',
+        'computer_name' => 'string',
+        'mac_address' => 'string',
+        'ip_address' => 'string',
+        'comment' => 'string'
     ];
 
     /**
@@ -58,28 +79,16 @@ class Equipment extends Model
      */
     public static $rules = [
         'name' => 'required',
-        'model' => 'required',
+        'brand_id' => 'required',
         'serialnumber' => 'required',
-        'equipment_type_id' => 'required'
+        'equipment_type_id' => 'required',
+        'status' => 'required',
+        'user_id' => 'required'
     ];
 
-    
-     //an equipment can only belong to a type
-     public function equipment_type() {
-        return $this->belongsTo('App\Models\EquipmentType');
+    public function brand(){
+        return $this->hasOne('App\Models\Brand');
     }
 
-    //an equipment can only belong to a status
-     public function situation() {
-        return $this->belongsTo('App\Models\Situation');
-    }
-     
-    public function inventoryHistory(){
-        return $this->hasMany('App\Models\InventoryHistory');
-    }
-    //  //a booking can has one room
-    //  public function room() {
-    //     return $this->hasOne('App\Models\Room');
-    // }
     
 }

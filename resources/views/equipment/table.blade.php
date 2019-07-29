@@ -2,32 +2,31 @@
     <table class="table" id="equipment-table">
         <thead>
             <tr>
-                <th>Sn</th>
                 <th>Name</th>
-                <th>Model</th>
-                <th>Serial Number</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Comment</th>
-                <th colspan="2">Action</th>
+         <th>Serial Number</th>
+         <th>Computer Name</th>
+        <th>Status</th>      
+        
+        
+       
+        
+                <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
-            <?php $i=1; ?>
-        @foreach($equipment as $equipments)
-        
+        @foreach($equipment as $equipment)
             <tr>
-                <td>{!! $i++ !!}</td>
-                <td>{!! $equipments->name !!}</td>
-                <td>{!! $equipments->model !!}</td>
-                <td>{!! $equipments->serialnumber !!}</td>
-                <td>{!! $equipments->equipment_type !!}</td>
-                <td>{!! $equipments->status !!}</td>
-                <td>{!! $equipments->comment !!}</td>
+                <td>{!! $equipment->name !!}</td>
+                <td>{!! $equipment->serialnumber !!}</td>
+                <td>{!! $equipment->computer_name !!}</td>
+                <td>{!! App\Models\Situation::find($equipment->situation_id)->name !!}</td>           
+            
+            
                 <td>
-                    {!! Form::open(['route' => ['equipment.destroy', $equipments->id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['equipment.destroy', $equipment->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
-                        <a href="{!! route('equipment.edit', [$equipments->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="{!! route('equipment.show', [$equipment->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a href="{!! route('equipment.edit', [$equipment->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                         {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
                     </div>
                     {!! Form::close() !!}

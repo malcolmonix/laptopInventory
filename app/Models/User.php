@@ -59,5 +59,7 @@ class User extends Model
         'password' => 'required'
     ];
 
-    
+    public function role(){
+        return $this->hasOne('App\Models\Role');
+    }
 }

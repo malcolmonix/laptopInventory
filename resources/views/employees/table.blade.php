@@ -3,16 +3,22 @@
     <table class="table" id="employees-table">
         <thead>
             <tr>
-                <th>Employee Id</th>
-                <th>Name</th>
+                    <th>Name</th>
+                <th>Employee ID#</th>
+                <th>Position</th>
+                <th>Project</th>
+                
                 <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach($employees as $employee)
             <tr>
-                <td>{!! $employee->employee_id !!}</td>
+                
             <td>{!! $employee->name !!}</td>
+            <td>{!! $employee->employee_id !!}</td>
+            <td>{!! $employee->position !!}</td>
+            <td>{!! $employee->project->name !!}</td>
               <td>
                     {!! Form::open(['route' => ['employees.destroy', $employee->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

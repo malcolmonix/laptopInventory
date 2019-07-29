@@ -20,6 +20,7 @@ class EquipmentTypeController extends AppBaseController
     public function __construct(EquipmentTypeRepository $equipmentTypeRepo)
     {
         $this->equipmentTypeRepository = $equipmentTypeRepo;
+        $this->middleware('auth');
     }
 
     /**

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\Project;
 
 class EmployeeController extends AppBaseController
 {
@@ -45,7 +46,9 @@ class EmployeeController extends AppBaseController
      */
     public function create()
     {
-        return view('employees.create');
+        $projects = Project::pluck('name', 'id');
+
+        return view('employees.create')->with('projects', $projects);
     }
 
     /**
@@ -71,7 +74,8 @@ class EmployeeController extends AppBaseController
 
             DB::table('employees')->insert(
                 [
-                     'employee_id'=>request('employee_id'), 'name'=>request('name'), 
+                     'employee_id'=>$input['employee_id'], 'name'=>$input['name'], 
+                     'position'=>$input['position'], 'project_id'=>$input['project_id'],
                      'active'=>$input['active'],'created_at'=>$date,
                      'updated_at'=>$date
                 ]

@@ -17,7 +17,9 @@ class CreateEmployeesTable extends Migration
             $table->increments('id');
             $table->string('employee_id');
             $table->string('name');
-            $table->string('active');
+            $table->string('position');
+            $table->integer('project_id');
+            $table->integer('active');
             $table->softDeletes();
             $table->timestamps();
         });

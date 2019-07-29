@@ -48,6 +48,9 @@
             .title {
                 font-size: 84px;
             }
+            .sub {
+                font-size: 20px;
+            }
 
             .links > a {
                 color: #636b6f;
@@ -79,15 +82,12 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    VKS Inventory
+                    VKS IT Inventory
                 </div>
 
-                <div class="links">
-                    <a href="#">Documentation</a>
-                    <a href="#">Laracasts</a>
-                    <a href="#">News</a>
-                    <a href="#">Forge</a>
-                    <a href="#">GitHub</a>
+                <div class="sub">
+                    <p>Just take a chill pill while we work on your priviledges to access our inventory list</p>
+                    <a href="{{ url('/dashboard') }}">Check Access!</a>
                 </div>
             </div>
         </div>

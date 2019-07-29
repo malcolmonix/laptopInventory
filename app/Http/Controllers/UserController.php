@@ -37,6 +37,15 @@ class UserController extends AppBaseController
             ->with('users', $users);
     }
 
+    public function assignIndex(Request $request)
+    {
+        $this->userRepository->pushCriteria(new RequestCriteria($request));
+        $users = $this->userRepository->all();
+
+        return view('users.assign.index')
+            ->with('users', $users);
+    }
+
     /**
      * Show the form for creating a new User.
      *
@@ -45,6 +54,12 @@ class UserController extends AppBaseController
     public function create()
     {
         return view('users.create');
+    }
+
+    public function Assigncreate()
+    {
+
+        return view('users.assign.create');
     }
 
     /**
@@ -130,6 +145,40 @@ class UserController extends AppBaseController
         }
 
         return view('users.edit')->with('user', $user);
+    }
+
+    public function updateRole($id, UpdateUserRequest $request)
+    {
+        $user = $this->userRepository->findWithoutFail($id);
+
+        if (empty($user)) {
+            Flash::error('User not found');
+
+            return redirect(route('users.assign.index'));
+        }
+
+        $user = $this->userRepository->update($request->all(), $id);
+
+        Flash::success('User role updated successfully.');
+
+        return redirect(route('users.assign.index'));
+    }
+
+
+
+    public function assign()
+    {
+        $input = $request->all();
+        
+        
+        $user = $this->userRepository->findWithoutFail($request->employee_id);
+
+        $user->role_id = $input['role_id'];
+        $user->save();
+
+        Flash::success('User Role Assigned successfully.');
+
+        return redirect(route('users.assign.index'));
     }
 
     /**
