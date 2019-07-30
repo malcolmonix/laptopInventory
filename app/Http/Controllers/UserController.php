@@ -72,6 +72,7 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         $input = $request->all();
+        $input['password'] = bcrypt($request->password);
         
         $date = date("Y-m-d");
 
