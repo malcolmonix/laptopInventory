@@ -35,7 +35,15 @@ Route::get('users/assign', 'UserController@assignIndex');
 Route::get('users/assign/create', 'UserController@Assigncreate');
 Route::get('users/assign/edit', 'UserController@editRole');
 Route::post('users/assign/update', 'UserController@updateRole');
+Route::get('download/{id}', 'InventoryHistoryController@download');
 
+Route::get('inventory_histories/edit', 'InventoryHistoryController@edit');
+Route::post('inventory/update', 'InventoryHistoryController@update');
+
+
+Route::get('inventory_histories/action', 'InventoryHistoryController@action')->name('inventory_histories.action');
+Route::get('employees/search', 'EmployeeController@search')->name('employees.search');
+Route::get('equipment/search', 'EquipmentController@search')->name('equipment.search');
 
 
 route::resource('dashboard','DashboardPagesController')->middleware('checkofficer');

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Manage Inventory')
 @section('content')
     <section class="content-header">
         <h1 class="pull-left">Manage Inventory</h1>
@@ -13,6 +13,9 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
+
+    
+
         <div class="box box-primary">
             <div class="box-body">
                     @include('inventory_histories.table')

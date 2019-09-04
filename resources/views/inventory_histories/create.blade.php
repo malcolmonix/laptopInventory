@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Manage Inventory')
 @section('content')
     <section class="content-header">
         <h1>
@@ -12,7 +12,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'inventoryHistories.store']) !!}
+                    {!! Form::open(['route' => 'inventoryHistories.store', 'files' => true]) !!}
 
                         @include('inventory_histories.fields')
 

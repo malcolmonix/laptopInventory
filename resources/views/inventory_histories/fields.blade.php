@@ -1,6 +1,5 @@
 <div class="form-horizontal">
 <!-- Issue Date Field -->
-
 <div class="form-group">
         <label class="col-md-3 col-xs-12 control-label">Issue Date:</label>
 
@@ -64,6 +63,14 @@
 </div>
 </div>
 
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
+
+    <div class="col-md-6 col-xs-12">
+        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Browse file"/>
+    </div>
+</div>
+
 <!-- Remarks Field -->
 <div class="form-group">
     {!! Form::label('remarks', 'Remark:',['class' => 'col-sm-3 control-label']) !!}
@@ -72,10 +79,15 @@
 </div>
 </div>
 
+
+</div>
 <div class="form-group">
  <div class="col-sm-offset-2 col-sm-10">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 </div>
+
+<!-- display uploaded document -->
+
 </div>

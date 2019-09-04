@@ -24,6 +24,7 @@ class CreateInventoryHistoriesTable extends Migration
             $table->string('approvedby');
             $table->string('remarks')->nullable();
             $table->integer('user_id');
+            $table->string('document_url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

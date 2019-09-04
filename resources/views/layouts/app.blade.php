@@ -18,7 +18,7 @@
 
 
     <!-- iCheck -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     
@@ -39,8 +39,7 @@
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/toastr/toastr.min.css')}}"/>
 
 
-
-    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/design-sheet.css')}}"/>
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/design-sheet.css')}}"/> 
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     @yield('css')
 </head>
@@ -177,7 +176,7 @@
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/js/adminlte.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script type="text/javascript" src="/js/clock.js"></script>
     <audio id="audio-alert" src="{{asset('backend/audio/alert.mp3')}}" preload="auto"></audio>
@@ -185,10 +184,10 @@
 <!-- END PRELOADS -->
 
 <!-- START SCRIPTS -->
-<!-- START PLUGINS -->
+<!-- START PLUGINS 
 <script type="text/javascript" src="{{asset('backend/js/plugins/jquery/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('backend/js/plugins/jquery/jquery-ui.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap/bootstrap.min.js')}}"></script>-->
 <!-- END PLUGINS -->
 
 <!-- START THIS PAGE PLUGINS-->

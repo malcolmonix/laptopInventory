@@ -125,7 +125,7 @@
                     @endforeach
                     </tbody>
                 </table>
-               
+               {{ $equipment->links() }}
             </div>
         </div>
         <!-- END DASHBOARD CHART -->

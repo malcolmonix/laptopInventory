@@ -32,13 +32,80 @@ class EmployeeController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->employeeRepository->pushCriteria(new RequestCriteria($request));
-        $employees = $this->employeeRepository->all();
-
-        return view('employees.index')
-            ->with('employees', $employees);
+        return view('employees.index');
     }
+    public function search(Request $request)
+    {
+            if($request->ajax())
+            {
+            $output = '';
+            $query = $request->get('query');
+            if($query != '')
+            {
+                $data = DB::table('employees')
+                ->join('projects','employees.project_id','=','projects.id' )
+                ->orWhere('employees.employee_id', 'like','%'. $query .'%')
+                ->orWhere('employees.name', 'like','%'. $query .'%')
+                ->orWhere('projects.name', 'like','%'. $query .'%')
+                ->orWhere('employees.position', 'like','%'. $query .'%')
+                ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
+                ->orderBy('employees.employee_id','asc')
+                ->get();              
+            }
+            else
+            {
+                $data = DB::table('employees')
+                ->join('projects','employees.project_id','=','projects.id' )
+                ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
+                ->orderBy('employees.employee_id','asc')
+                ->paginate(20);
+           
+            }
+           
+            $total_row = 0;
+            $total_row = $data->count();
+           
+            if($total_row > 0)
+            {
+                $i = 1;
 
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr>
+                    <td> '. $i++ .'</a> </td>
+                    <td>'. $row->employee_name .' </td>
+                    <td>'. $row->employee_id .' </td>
+                    <td>'. $row->position .' </td>
+                    <td>'. $row->project .'</td>
+                    
+                    <td>
+                         <div class=btn-group>
+                             <button type="button" name="show" id="'. $row->id .'" class="btn btn-success show"><i class="glyphicon glyphicon-eye-open"></i></button>
+                             <button type="button" name="edit" id="'. $row->id .'" class="btn btn-warning edit"><i class="glyphicon glyphicon-edit"></i></button>                  
+                        </div>
+                    </td>  
+                    </tr>
+                    ';
+                }
+            }
+            else
+            {
+            $output = '
+            <tr>
+                <td stlye=align:center colspan=5>No Data Found</td>
+            </tr>
+            ';
+            }
+            $data = array(
+            'table_data'  => $output,
+            'total_data'  => $total_row
+            );
+
+            echo json_encode($data);
+            }
+        
+    }
     /**
      * Show the form for creating a new Employee.
      *
@@ -123,14 +190,16 @@ class EmployeeController extends AppBaseController
     public function edit($id)
     {
         $employee = $this->employeeRepository->findWithoutFail($id);
-
+        $projects = Project::pluck('name', 'id');
         if (empty($employee)) {
             Flash::error('Employee not found');
 
             return redirect(route('employees.index'));
         }
 
-        return view('employees.edit')->with('employee', $employee);
+        return view('employees.edit')
+            ->with('projects',$projects)
+            ->with('employees', $employee);
     }
 
     /**
