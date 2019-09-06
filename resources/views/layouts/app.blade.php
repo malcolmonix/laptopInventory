@@ -29,8 +29,8 @@
 
 
 
-    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/animate.css')}}"/>
-    <!--<link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/style.css')}}"/>-->
+    <!--<link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/animate.css')}}"/>
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/style.css')}}"/>-->
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/custom.css')}}"/>
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/datapicker/datepicker3.css')}}"/>
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/daterangepicker/daterangepicker-bs3.css')}}"/>
@@ -178,9 +178,9 @@
 
    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
-    <script type="text/javascript" src="/js/clock.js"></script>
+    
     <audio id="audio-alert" src="{{asset('backend/audio/alert.mp3')}}" preload="auto"></audio>
-<audio id="audio-fail" src="{{asset('backend/audio/fail.mp3')}}" preload="auto"></audio>
+    <audio id="audio-fail" src="{{asset('backend/audio/fail.mp3')}}" preload="auto"></audio>
 <!-- END PRELOADS -->
 
 <!-- START SCRIPTS -->

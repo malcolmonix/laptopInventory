@@ -19,6 +19,7 @@ class CreateEquipmentsTable extends Migration
             $table->string('model')->nullable();
             $table->integer('brand_id');
             $table->string('serialnumber');
+<<<<<<< HEAD
             $table->integer('equipment_type_id');
             $table->integer('situation_id')->nullable();
             $table->enum('status', ['used', 'new', 'faulty']);
@@ -27,6 +28,13 @@ class CreateEquipmentsTable extends Migration
             $table->string('mac_address')->nullable();
             $table->string('ip_address')->nullable();
             $table->string('comment')->nullable();
+=======
+            $table->string('equipment_type_id');
+            $table->string('situation_id');
+            $table->string('user_id')->default('');
+            $table->string('project_id')->default('');
+            $table->string('comment');
+>>>>>>> 6552989b297db26fc10311507edfc08a153d210a
             $table->softDeletes();
             $table->timestamps();
         });
