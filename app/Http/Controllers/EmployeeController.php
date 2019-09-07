@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\Project;
 
 class EmployeeController extends AppBaseController
 {
@@ -31,13 +32,40 @@ class EmployeeController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->employeeRepository->pushCriteria(new RequestCriteria($request));
-        $employees = $this->employeeRepository->all();
+        
+        $data = DB::table('employees')
+                ->join('projects','employees.project_id','=','projects.id' )
+                ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
+                ->orderBy('employees.employee_id','asc')
+                ->paginate(10);
 
-        return view('employees.index')
-            ->with('employees', $employees);
+        return view('employees.index',compact('data'))->render();
     }
 
+    
+    public function fetch_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
+
+            $data = DB::table('employees')
+                    ->join('projects','employees.project_id','=','projects.id' )
+                    ->orWhere('employees.employee_id', 'like','%'. $query .'%')
+                    ->orWhere('employees.name', 'like','%'. $query .'%')
+                    ->orWhere('projects.name', 'like','%'. $query .'%')
+                    ->orWhere('employees.position', 'like','%'. $query .'%')
+                    ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
+                    ->orderBy($sort_by, $sort_type)
+                    ->paginate(10);      
+
+            return view('employees.pagination', compact('data'))->render();     
+
+        }          
+    }
     /**
      * Show the form for creating a new Employee.
      *
@@ -45,7 +73,9 @@ class EmployeeController extends AppBaseController
      */
     public function create()
     {
-        return view('employees.create');
+        $projects = Project::pluck('name', 'id');
+
+        return view('employees.create')->with('projects', $projects);
     }
 
     /**
@@ -71,7 +101,8 @@ class EmployeeController extends AppBaseController
 
             DB::table('employees')->insert(
                 [
-                     'employee_id'=>request('employee_id'), 'name'=>request('name'), 
+                     'employee_id'=>$input['employee_id'], 'name'=>$input['name'], 
+                     'position'=>$input['position'], 'project_id'=>$input['project_id'],
                      'active'=>$input['active'],'created_at'=>$date,
                      'updated_at'=>$date
                 ]
@@ -99,14 +130,18 @@ class EmployeeController extends AppBaseController
     public function show($id)
     {
         $employee = $this->employeeRepository->findWithoutFail($id);
+        $project = DB::table('projects')->where('id',$employee->project_id)->first();
 
         if (empty($employee)) {
             Flash::error('Employee not found');
 
             return redirect(route('employees.index'));
         }
-
-        return view('employees.show')->with('employee', $employee);
+       
+       
+        return view('employees.show')
+         ->with('project',$project)
+        ->with('employee', $employee);
     }
 
     /**
@@ -119,14 +154,16 @@ class EmployeeController extends AppBaseController
     public function edit($id)
     {
         $employee = $this->employeeRepository->findWithoutFail($id);
-
+        $projects = Project::pluck('name', 'id');
         if (empty($employee)) {
             Flash::error('Employee not found');
 
             return redirect(route('employees.index'));
         }
 
-        return view('employees.edit')->with('employee', $employee);
+        return view('employees.edit')
+            ->with('projects',$projects)
+            ->with('employees', $employee);
     }
 
     /**

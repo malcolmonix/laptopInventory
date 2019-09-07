@@ -16,13 +16,17 @@ class CreateEquipmentsTable extends Migration
         Schema::create('equipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('model');
+            $table->string('model')->nullable();
+            $table->integer('brand_id');
             $table->string('serialnumber');
-            $table->string('equipment_type_id');
-            $table->string('situation_id');
-            $table->string('user_id')->default('');
-            $table->string('project_id')->default('');
-            $table->string('comment');
+            $table->integer('equipment_type_id');
+            $table->integer('situation_id')->nullable();
+            $table->enum('status', ['used', 'new', 'faulty']);
+            $table->integer('user_id');
+            $table->string('computer_name')->nullable();            
+            $table->string('mac_address')->nullable();
+            $table->string('ip_address')->nullable();
+            $table->string('comment')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -1,54 +1,75 @@
-<!-- Id Field -->
-<div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $equipment->id !!}</p>
-</div>
 
 <!-- Name Field -->
-<div class="form-group">
-    {!! Form::label('name', 'Name:') !!}
-    <p>{!! $equipment->name !!}</p>
+<div class="form-group col-sm-6">
+    {!! Form::label('name', 'Name:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('name', $equipment->name) !!}
 </div>
 
 <!-- Model Field -->
-<div class="form-group">
-    {!! Form::label('model', 'Model:') !!}
-    <p>{!! $equipment->model !!}</p>
+<div class="form-group col-sm-6">
+    {!! Form::label('Model', 'Model:',['class' => ' col-sm-3 control-label']) !!}
+   {!! Form::label('model', $equipment->model) !!}
+</div>
+
+<!-- Brand Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('brand', 'Brand:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('brand', isset($brand->name)? $brand->name:'' ) !!}
 </div>
 
 <!-- Serialnumber Field -->
-<div class="form-group">
-    {!! Form::label('serialnumber', 'Serial Number:') !!}
-    <p>{!! $equipment->serialnumber !!}</p>
+<div class="form-group col-sm-6">
+    {!! Form::label('serialnumber', 'Serial Number:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('serialnumber', $equipment->serialnumber) !!}
 </div>
 
 <!-- Equipment Type Id Field -->
-<div class="form-group">
-    {!! Form::label('equipment_type_id', 'Equipment Type:') !!}
-    <p>{!! $equipment->equipment_type_id !!}</p>
+<div class="form-group col-sm-6">
+    {!! Form::label('equipment_type', 'Equipment Type:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('equipment_type', $equipment_type->name) !!}
+</div>
+
+<!-- Situation Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('Situation', 'Situation:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('Situation', $situation->name) !!}
 </div>
 
 <!-- Status Field -->
-<div class="form-group">
-    {!! Form::label('status', 'Status:') !!}
-    <p>{!! $equipment->situation_id !!}</p>
+<div class="form-group col-sm-6">
+    {!! Form::label('status', 'Status:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('status', $equipment->status) !!}
 </div>
 
-<!-- Deleted At Field -->
-<div class="form-group">
-    {!! Form::label('deleted_at', 'Deleted At:') !!}
-    <p>{!! $equipment->deleted_at !!}</p>
+
+<!-- Computer Name Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('computer_name', 'Computer Name:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('computer_name', $equipment->computer_name) !!}
 </div>
 
-<!-- Created At Field -->
-<div class="form-group">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $equipment->created_at !!}</p>
+<!-- Mac Address Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('mac_address', 'Mac Address:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('mac_address', $equipment->mac_address) !!}
 </div>
+
+<!-- Ip Address Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('ip_address', 'Ip Address:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('ip_address', $equipment->ip_address) !!}
+</div>
+
 
 <!-- Updated At Field -->
-<div class="form-group">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $equipment->updated_at !!}</p>
+<div class="form-group col-sm-6">
+    {!! Form::label('updated_at', 'Last Updated:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('updated_at', $equipment->updated_at) !!}
+</div>
+
+<!-- Comment Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('comment', 'Comment:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('comment', $equipment->comment) !!}
 </div>
 

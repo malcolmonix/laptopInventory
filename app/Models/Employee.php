@@ -29,7 +29,9 @@ class Employee extends Model
 
     public $fillable = [
         'employee_id',
-        'name'
+        'name',
+        'project_id',
+        'position'
     ];
 
     /**
@@ -40,7 +42,9 @@ class Employee extends Model
     protected $casts = [
         'id' => 'integer',
         'employee_id' => 'string',
-        'name' => 'string'
+        'name' => 'string',
+        'position' => 'string',
+        'project_id' => 'integer'
     ];
 
     /**
@@ -50,10 +54,16 @@ class Employee extends Model
      */
     public static $rules = [
         'employee_id' => 'required',
-        'name' => 'required'
+        'name' => 'required',
+        'position' => 'required',
+        'project_id' => 'required'
     ];
     public function inventoryhistory(){
         return $this->hasMany('App\Models\InventoryHistory');
+    }
+
+    public function project(){
+        return $this->belongsTo('App\Models\Project');
     }
     
 }

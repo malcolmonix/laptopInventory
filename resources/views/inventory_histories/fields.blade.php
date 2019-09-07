@@ -1,24 +1,18 @@
 <div class="form-horizontal">
 <!-- Issue Date Field -->
 <div class="form-group">
-    {!! Form::label('issue_date', 'Issue Date:',['class' => 'col-sm-3 control-label']) !!}
-    <div class="col-sm-8">
-    {!! Form::date('issue_date', null, ['class' => 'form-control','id'=>'issue_date']) !!}
-    </div>
-</div>
+        <label class="col-md-3 col-xs-12 control-label">Issue Date:</label>
 
-@section('scripts')
-    <script type="text/javascript">
-        $('#issue_date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true,
-            format: "yyyy/mm/dd"
-        })
-    </script>
-@endsection
+        <div class="col-sm-8 col-xs-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar text-primary"></i></span>
+                <input type="text" class="form-control datepicker" name="issue_date" value="<?php echo Carbon\Carbon::today()->format('Y-m-d') ?>" >
+            </div>
+            <span class="help-block"></span>
+        </div>
+    </div>
+
+
 
 <!-- Employee Id Field -->
 <div class="form-group">
@@ -30,9 +24,9 @@
 
 <!-- Equipment Id Field -->
 <div class="form-group">
-    {!! Form::label('equipment_id', 'Equipment:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('equipment_id', 'Device Name:',['class' => 'col-sm-3 control-label']) !!}
      <div class="col-sm-8">
-         {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
+    {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
 </div>
 </div>
 
@@ -69,18 +63,31 @@
 </div>
 </div>
 
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
+
+    <div class="col-md-6 col-xs-12">
+        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Browse file"/>
+    </div>
+</div>
+
 <!-- Remarks Field -->
 <div class="form-group">
     {!! Form::label('remarks', 'Remark:',['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-8">
-    {!! Form::textarea('remarks', null, ['class' => 'form-control']) !!}
+    {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information of where staff is currently working and who is he?']) !!}
 </div>
 </div>
 
+
+</div>
 <div class="form-group">
  <div class="col-sm-offset-2 col-sm-10">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 </div>
+
+<!-- display uploaded document -->
+
 </div>

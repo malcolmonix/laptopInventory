@@ -18,7 +18,7 @@
 
 
     <!-- iCheck -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/_all.css">-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     
@@ -29,8 +29,8 @@
 
 
 
-    <!--<link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/animate.css')}}"/>
-    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/style.css')}}"/>-->
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/animate.css')}}"/>
+    <!--<link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/style.css')}}"/>-->
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/custom.css')}}"/>
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/datapicker/datepicker3.css')}}"/>
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/daterangepicker/daterangepicker-bs3.css')}}"/>
@@ -39,8 +39,7 @@
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/toastr/toastr.min.css')}}"/>
 
 
-
-    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/design-sheet.css')}}"/>
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/design-sheet.css')}}"/> 
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     @yield('css')
 </head>
@@ -53,7 +52,7 @@
 
             <!-- Logo -->
             <a href="#" class="logo">
-                <b>VKS</b>
+                <b>VKS IT Inventory</b>
             </a>
 
             <!-- Header Navbar -->
@@ -177,11 +176,11 @@
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/js/adminlte.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
-    
+    <script type="text/javascript" src="/js/clock.js"></script>
     <audio id="audio-alert" src="{{asset('backend/audio/alert.mp3')}}" preload="auto"></audio>
-    <audio id="audio-fail" src="{{asset('backend/audio/fail.mp3')}}" preload="auto"></audio>
+<audio id="audio-fail" src="{{asset('backend/audio/fail.mp3')}}" preload="auto"></audio>
 <!-- END PRELOADS -->
 
 <!-- START SCRIPTS -->

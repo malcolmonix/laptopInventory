@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateEquipmentRequest;
 use App\Http\Requests\UpdateEquipmentRequest;
 use App\Repositories\EquipmentRepository;
@@ -13,13 +12,13 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\EquipmentType;
 use App\Models\Situation;
+use App\Models\Brand;
+use Illuminate\Support\Facades\DB;
 
 class EquipmentController extends AppBaseController
 {
     /** @var  EquipmentRepository */
     private $equipmentRepository;
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
 
     public function __construct(EquipmentRepository $equipmentRepo)
     {
@@ -35,20 +34,38 @@ class EquipmentController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->equipmentRepository->pushCriteria(new RequestCriteria($request));
-        $equipment = DB::table('equipments as e')
-                    ->join('situations as s','e.situation_id','=','s.id' )
-                    ->join('equipment_types as et','e.equipment_type_id','=','et.id' )
-                    ->select('e.name as name','e.model','e.serialnumber','e.id','et.name as equipment_type','s.name as status','e.comment','e.deleted_at','e.created_at','e.updated_at')
-                    ->orderBy('e.name','asc')
-                    ->get();
+        $data = DB::table('equipments')
+                ->join('situations','equipments.situation_id','=','situations.id' )
+                ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
+                ->orderBy('equipments.name','asc')
+                ->paginate(10);
 
-       
-
-           return view('equipment.index')
-            ->with('equipment', $equipment);
+        return view('equipment.index',compact('data'))->render();
     }
+    public function fetch_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
 
+            $data = DB::table('equipments')
+                ->join('situations','equipments.situation_id','=','situations.id' )
+                ->orWhere('equipments.name', 'like','%'. $query .'%')
+                ->orWhere('equipments.serialnumber', 'like','%'. $query .'%')
+                ->orWhere('equipments.computer_name', 'like','%'. $query .'%')
+                ->orWhere('situations.Name', 'like','%'. $query .'%')
+                ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
+                ->orderBy('equipments.name','asc')
+                ->paginate(10);      
+
+            return view('equipment.pagination', compact('data'))->render();     
+
+        }          
+    }
+    
     /**
      * Show the form for creating a new Equipment.
      *
@@ -56,12 +73,13 @@ class EquipmentController extends AppBaseController
      */
     public function create()
     {
-        $equipment_type = EquipmentType::pluck('name', 'id');
-        $situation = Situation::pluck('name', 'id');
-
+        $data['equipment_type'] = EquipmentType::pluck('name', 'id');
+        $data['situation'] = Situation::pluck('name','id');
+        $brand = Brand::pluck('name','id');
+        
         return view('equipment.create')
-            ->with('situation', $situation)
-            ->with('equipment_type', $equipment_type);
+                ->with('brand',$brand)
+                ->with('data', $data);
     }
 
     /**
@@ -74,37 +92,12 @@ class EquipmentController extends AppBaseController
     public function store(CreateEquipmentRequest $request)
     {
         $input = $request->all();
-        $input['situation_id'] = '2';
-        //$input['user_id'] = auth()->id();
-        
-        $date = date("Y-m-d");
-        
-       
 
-        if (DB::table('equipments')->where('name',request('name'))->where('deleted_at',null)->exists() == false) {
-            DB::table('equipments')->insert(
-               [
-                    'name'=>request('name'), 'model'=>request('model'), 
-                    'serialnumber'=>request('serialnumber'),'equipment_type_id'=>request('equipment_type_id'),
-                    'situation_id'=>$input['situation_id'],'comment'=>$input['comment'],'created_at'=>$date,
-                    'updated_at'=>$date
-               ]
-            );
-            
-            
-            
-            
-            //$equipment = $this->equipmentRepository->create($input);
-            Flash::success('Equipment saved successfully.');
+        $equipment = $this->equipmentRepository->create($input);
 
-            
-            return redirect(route('equipment.index'));
-        }
-        else
-        {
-            Flash::error('Already existing equipment');
-            return redirect(route('equipment.index'));
-        }
+        Flash::success('Equipment saved successfully.');
+
+        return redirect(route('equipment.index'));
     }
 
     /**
@@ -117,8 +110,10 @@ class EquipmentController extends AppBaseController
     public function show($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
-        $equipment_type = EquipmentType::pluck('name', 'id');
-        $situation = Situation::pluck('name', 'id');
+       
+        $equipment_types = DB::table('equipment_types')->where('id',$equipment->equipment_type_id)->first();
+        $situations = DB::table('situations')->where('id',$equipment->situation_id)->first();
+        $brands = DB::table('brands')->where('id',$equipment->brand_id)->first();
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -127,9 +122,10 @@ class EquipmentController extends AppBaseController
         }
 
         return view('equipment.show')
-        ->with('equipment', $equipment)
-        ->with('situation', $situation)
-        ->with('equipment_type', $equipment_type);
+        ->with('situation', $situations)
+        ->with('brand',$brands)
+        ->with('equipment_type',$equipment_types)
+        ->with('equipment', $equipment);
     }
 
     /**
@@ -143,7 +139,8 @@ class EquipmentController extends AppBaseController
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
         $equipment_type = EquipmentType::pluck('name', 'id');
-        $situation = Situation::pluck('name', 'id');
+        $situation = Situation::pluck('name','id');
+        $brand = Brand::pluck('name','id');
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -152,9 +149,10 @@ class EquipmentController extends AppBaseController
         }
 
         return view('equipment.edit')
-        ->with('equipment', $equipment)
         ->with('situation', $situation)
-        ->with('equipment_type', $equipment_type);
+        ->with('brand',$brand)
+        ->with('equipment_type',$equipment_type)
+        ->with('equipment', $equipment);
     }
 
     /**
@@ -168,10 +166,6 @@ class EquipmentController extends AppBaseController
     public function update($id, UpdateEquipmentRequest $request)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
-        $equipment['comment'] = request("comment");
-        $equipment['user_id'] = auth()->id();
-        
-        $date = date("Y-m-d");
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -179,17 +173,7 @@ class EquipmentController extends AppBaseController
             return redirect(route('equipment.index'));
         }
 
-
-        DB::table('equipments')->where('id','=',$id)->update(
-            [
-                 'name'=>request('name'), 'model'=>request('model'), 
-                 'serialnumber'=>request('serialnumber'),'equipment_type_id'=>request('equipment_type_id'),
-                 'user_id'=>$equipment['user_id'],'comment'=>$equipment['comment'],'created_at'=>$date,
-                 'updated_at'=>$date
-            ]
-         );
-
-        //$equipment = $this->equipmentRepository->update($request->all(), $id);
+        $equipment = $this->equipmentRepository->update($request->all(), $id);
 
         Flash::success('Equipment updated successfully.');
 
@@ -206,27 +190,17 @@ class EquipmentController extends AppBaseController
     public function destroy($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
-        
-        if (DB::table('inventory_histories')->where('equipment_id',$id)->exists() == false) 
-        {
 
-            if (empty($equipment)) {
-                Flash::error('Equipment not found');
-
-                return redirect(route('equipment.index'));
-            }
-
-            $this->equipmentRepository->delete($id);
-
-            Flash::success('Equipment deleted successfully.');
+        if (empty($equipment)) {
+            Flash::error('Equipment not found');
 
             return redirect(route('equipment.index'));
         }
-        else
-        {
-            Flash::error('Equipment has history cannot be deleted.');
 
-            return redirect(route('equipment.index'));
-        }
+        $this->equipmentRepository->delete($id);
+
+        Flash::success('Equipment deleted successfully.');
+
+        return redirect(route('equipment.index'));
     }
 }

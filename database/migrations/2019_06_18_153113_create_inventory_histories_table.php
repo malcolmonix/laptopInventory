@@ -16,14 +16,15 @@ class CreateInventoryHistoriesTable extends Migration
         Schema::create('inventory_histories', function (Blueprint $table) {
             $table->increments('id');
             $table->date('issue_date');
-            $table->string('employee_id');
-            $table->string('equipment_id');
-            $table->string('project_id');
-            $table->string('situation_id');
-            $table->string('projectTo_id');
+            $table->integer('employee_id');
+            $table->integer('equipment_id');
+            $table->integer('project_id');
+            $table->integer('situation_id');
+            $table->integer('projectTo_id');
             $table->string('approvedby');
-            $table->string('remarks');
-            $table->string('user_id');
+            $table->string('remarks')->nullable();
+            $table->integer('user_id');
+            $table->string('document_url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

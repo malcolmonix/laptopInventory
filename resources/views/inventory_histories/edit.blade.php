@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Manage Inventory')
 @section('content')
     <section class="content-header">
         <h1>
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($inventoryHistory, ['route' => ['inventoryHistories.update', $inventoryHistory->id], 'method' => 'patch']) !!}
+                   {!! Form::model($inventoryHistory, ['route' => ['inventoryHistories.update', $inventoryHistory->id], 'method' => 'patch', 'files' => true]) !!}
 
-                        @include('inventory_histories.fields')
+                        @include('inventory_histories.edit_fields')
 
                    {!! Form::close() !!}
                </div>

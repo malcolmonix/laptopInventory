@@ -15,6 +15,9 @@ use App\Models\Equipment;
 use App\Models\Situation;
 use App\Models\Employee;
 use App\Models\Project;
+use Validator;
+use File;
+
 
 
 class InventoryHistoryController extends AppBaseController
@@ -37,24 +40,52 @@ class InventoryHistoryController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->inventoryHistoryRepository->pushCriteria(new RequestCriteria($request));
-        //$inventoryHistories = $this->inventoryHistoryRepository->all();
-        $inventoryHistories = DB::table('inventory_histories')
-                                ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
-                                ->join('situations','inventory_histories.situation_id','=','situations.id' )
-                                ->join('projects','inventory_histories.project_id','=','projects.id' )
-                                ->join('employees','inventory_histories.employee_id','=','employees.id' )
-                                ->join('users','inventory_histories.user_id','=','users.id' )
-                                ->select('equipments.name as equipment','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
-                                ->orderBy('inventory_histories.id','desc')
-                                ->get();
-
+        $data = DB::table('inventory_histories')
+                    ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
+                    ->join('situations','inventory_histories.situation_id','=','situations.id' )
+                    ->join('projects','inventory_histories.project_id','=','projects.id' )
+                    ->join('employees','inventory_histories.employee_id','=','employees.id' )
+                    ->join('users','inventory_histories.user_id','=','users.id' )
+                    ->select('equipments.name as equipment','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
+                    ->orderBy('inventory_histories.id','asc')->paginate(10);
         
-
         return view('inventory_histories.index')
-            ->with('inventoryHistories', $inventoryHistories);
-
+                        ->with(compact('data'));
     }
+    
+    public function fetch_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
+
+            $data = DB::table('inventory_histories')
+                    ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
+                    ->join('situations','inventory_histories.situation_id','=','situations.id' )
+                    ->join('projects','inventory_histories.project_id','=','projects.id' )
+                    ->join('employees','inventory_histories.employee_id','=','employees.id' )
+                    ->join('users','inventory_histories.user_id','=','users.id' )
+                    ->where('issue_date', 'like','%'. $query .'%')
+                    ->orWhere('approvedby', 'like','%'. $query .'%')
+                    ->orWhere('projects.name', 'like','%'. $query .'%')
+                    ->orWhere('situations.name', 'like','%'. $query .'%')
+                    ->orWhere('employees.name', 'like','%'. $query .'%')
+                    ->orWhere('equipments.name', 'like','%'. $query .'%')
+                    ->orWhere('equipments.computer_name', 'like','%'. $query .'%')
+                    ->orWhere('equipments.serialnumber', 'like','%'. $query .'%')
+                    ->orWhere('users.name', 'like','%'. $query .'%')
+                    ->select('equipments.name as equipment','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
+                    ->orderBy($sort_by, $sort_type)
+                    ->paginate(10);
+
+            return view('inventory_histories.pagination', compact('data'))->render();     
+
+        }          
+    }
+
 
     /**
      * Show the form for creating a new InventoryHistory.
@@ -91,34 +122,51 @@ class InventoryHistoryController extends AppBaseController
         $employeeid = request('employee_id');
         $statusid = request('situation_id');
         $equipmentid = request('equipment_id');
-        $projectid = request('project_id');
-
-        /***
-        $equipment_status_id = DB::table('equipments')
-        ->select('situation_id')
-        ->where('id',$equipmentid)
-        ->first();
+        $input['document_url'] = "";
+        $filename = request('filename');
         
-        $status = $equipment_status_id->situation_id;
+        $new_name = $mess =  "";
 
+        $validation = Validator::make($request->all(), [
+            'document_url' => 'required|mimes:pdf|max:10000'
+           ]);
+                     
+          
+           if($validation->passes())
+           {
+                $image = $request->file('document_url');
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $filename = $image->getClientOriginalName();
+                $image->move(public_path('documents'),  $filename);
+           }
+           else
+           {
+               $mess = $validation->errors()->all();
+           }         
+           
+           $date = date("Y-m-d");
 
-        dd($equipment_status_id->situation_id);
+           DB::table('inventory_histories')->insert(
+            [
+                 'issue_date'=>$input['issue_date'], 'employee_id'=>$input['employee_id'], 
+                 'equipment_id'=>$input['equipment_id'], 'project_id'=>$input['project_id'],
+                 'situation_id'=>$input['situation_id'],'projectTo_id'=>$input['projectTo_id'],
+                 'approvedby'=>$input['approvedby'],'remarks'=>$input['remarks'],
+                 'user_id'=>$input['user_id'],'document_url'=>$filename,
+                 'created_at'=>$date,
+                 'updated_at'=>$date
+            ]
+         );
 
-        $inventoryalreadyexisted = DB::table('inventory_histories')
-        ->where('employee_id',request('employee_id'))
-        ->where('equipment_id',request('equipment_id'))
-        ->where('project_id',request('project_id'))
-        ->where('deleted_at',null)
-        ->exists();
-      ***/
+           //$inventoryHistory = $this->inventoryHistoryRepository->create($input);
 
-   
-            $inventoryHistory = $this->inventoryHistoryRepository->create($input);
-            $equipment = Equipment::find($equipmentid);
+           $equipment = Equipment::find($equipmentid);
+           $equipment->situation_id = $statusid;
+           $equipment->save();
 
-            DB::table('equipments')
-                ->where('id',$equipmentid)
-                ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid,'project_id'=>$projectid]);
+            // DB::table('equipments')
+            //     ->where('id',$equipmentid)
+            //     ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid]);
 
             
             Flash::success('Inventory saved successfully.');
@@ -135,7 +183,22 @@ class InventoryHistoryController extends AppBaseController
      */
     public function show($id)
     {
-        $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
+        $inventoryHistory = DB::table('inventory_histories as i')
+                                ->join('equipments','i.equipment_id','=','equipments.id' )
+                                ->join('situations','i.situation_id','=','situations.id' )
+                                ->join('projects','i.project_id','=','projects.id' )
+                                ->join('employees','i.employee_id','=','employees.id' )
+                                ->join('users','i.user_id','=','users.id' )
+                                ->where('i.id','=',$id)
+                                ->select('equipments.name as equipment','employees.name as employee','employees.employee_id', 'projects.name as project','situations.name as status','i.id','i.issue_date','i.approvedby','i.remarks','i.created_at','i.updated_at','users.name as postedby')
+                                ->orderBy('i.id','desc')->first();
+                                
+
+       $inventoryHistoryDoc = $this->inventoryHistoryRepository->findWithoutFail($id);
+       $filename = $inventoryHistoryDoc->document_url;
+       $documents = "/documents/" . $filename;
+
+
 
         if (empty($inventoryHistory)) {
             Flash::error('Inventory History not found');
@@ -143,8 +206,65 @@ class InventoryHistoryController extends AppBaseController
             return redirect(route('inventoryHistories.index'));
         }
 
-        return view('inventory_histories.show')->with('inventoryHistory', $inventoryHistory);
+        return view('inventory_histories.show')
+        ->with('document',$documents)
+        ->with('inventoryHistory', $inventoryHistory);
     }
+    /**
+     * handle document download
+     */
+    public function download($id)
+    {
+        $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
+
+        if (empty($inventoryHistory)) {
+            Flash::error('Document not found');
+
+            return redirect(route('inventoryHistories.index'));
+        }
+
+                  
+        $document_url = $inventoryHistory->document_url;
+        if($document_url != "")
+        {
+            $file = public_path(). "/documents/" . $document_url;
+            
+            $headers = array(
+                'Content-Type: application/pdf',
+                );
+
+            return Response::download($file, $document_url, $headers); 
+        }
+        else
+        {
+            Flash::error('Document not found');
+
+            return redirect(route('inventoryHistories.index'));
+        }
+    }
+
+    /**
+     *  function to destroy document if it is change
+     */
+    public function destroy_document($file)
+    {
+        $file = base64_decode($file);
+        File::delete($file);
+    }
+    /**
+     * display the uploaded document
+     */
+    public function getdocument($id)
+    {
+        $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
+        $filename = $inventoryHistory->document_url;
+        $file = public_path(). "/documents/" . $filename;
+        header('Content-type:application/pdf');
+        header('Content-Disposition: inline; filename="' .$filename .'"');
+        header('Accept-Ranges: bytes');
+        readfile($file);
+    }
+
 
     /**
      * Show the form for editing the specified InventoryHistory.
@@ -155,23 +275,28 @@ class InventoryHistoryController extends AppBaseController
      */
     public function edit($id)
     {
+       
         $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
         $equipment = Equipment::pluck('name','id');
         $situation = Situation::pluck('name','id');
         $employee = Employee::pluck('name','id');
         $project = Project::pluck('name','id');
-
+        $filename = $inventoryHistory->document_url;
+        $documents = "/documents/" . $filename;
+       
+        
         if (empty($inventoryHistory)) {
             Flash::error('Inventory not found');
 
             return redirect(route('inventoryHistories.index'));
         }
-
+      
         return view('inventory_histories.edit')
             ->with('inventoryHistory', $inventoryHistory)
             ->with('equipment', $equipment)
             ->with('situation',$situation)
             ->with('project',$project)
+            ->with('document',$documents)
             ->with('employee',$employee);
     }
 
@@ -185,6 +310,7 @@ class InventoryHistoryController extends AppBaseController
      */
     public function update($id, UpdateInventoryHistoryRequest $request)
     {
+               
         $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
 
         if (empty($inventoryHistory)) {
@@ -193,11 +319,54 @@ class InventoryHistoryController extends AppBaseController
             return redirect(route('inventoryHistories.index'));
         }
 
-        $inventoryHistory = $this->inventoryHistoryRepository->update($request->all(), $id);
+        $date = date("Y-m-d");
+        $fileurl = request('document_url');
+              
+        $new_name = $mess = $filename =  "";
 
-        Flash::success('Inventory updated successfully.');
+        if($fileurl != "")
+        {
+            $validation = Validator::make($request->all(), [
+            'document_url' => 'required|mimes:pdf|max:10000'
+           ]);
+                  
+           
+           if($validation->passes())
+           {
+                $image = $request->file('document_url');
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $filename = $image->getClientOriginalName();
+                $image->move(public_path('documents'),  $filename);
+           }
+           else
+           {
+                $mess = $validation->errors()->all();
+           }     
+        }    
+              
 
-        return redirect(route('inventoryHistories.index'));
+       DB::table('inventory_histories')
+            ->where('id',$id)
+            ->update(['document_url'=>$filename]);
+
+       $inventoryHistory = $this->inventoryHistoryRepository->update($request->all(), $id);
+
+       $equipment = Equipment::find($inventoryHistory->equipment_id);
+       $situation = Situation::find($request->situation_id);
+
+       if($situation->name == 'RETURNED') {           
+           $sit = Situation::where('name', 'IN-STOCK')->first();           
+            $equipment->situation_id = $sit->id;
+        } else {
+            $equipment->situation_id = $request->situation_id;
+        }
+
+       
+      
+       $equipment->save();
+
+       Flash::success('Inventory updated successfully.');
+       return redirect(route('inventoryHistories.index'));
     }
 
     /**
@@ -217,7 +386,10 @@ class InventoryHistoryController extends AppBaseController
             return redirect(route('inventoryHistories.index'));
         }
 
-        $this->inventoryHistoryRepository->delete($id);
+        //$this->inventoryHistoryRepository->delete($id);
+        DB::table('inventory_histories')
+            ->where('id',$id)
+            ->delete(); 
 
         Flash::success('Inventory deleted successfully.');
 
