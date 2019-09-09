@@ -9,7 +9,7 @@
     <div class="content">
         <div class="box box-primary">
             <div class="box-body">
-                <div class="row" style="padding-left: 20px">
+                <div class="row" style="padding-left: 0px">
                     @include('employees.show_fields')
                     <a href="{!! route('employees.index') !!}" class="btn btn-default">Back</a>
                 </div>

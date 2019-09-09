@@ -40,105 +40,52 @@ class InventoryHistoryController extends AppBaseController
      */
     public function index(Request $request)
     {
-        return view('inventory_histories.index');
+
+        $data = DB::table('inventory_histories')
+                    ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
+                    ->join('situations','inventory_histories.situation_id','=','situations.id' )
+                    ->join('projects','inventory_histories.project_id','=','projects.id' )
+                    ->join('employees','inventory_histories.employee_id','=','employees.id' )
+                    ->join('users','inventory_histories.user_id','=','users.id' )
+                    ->select('equipments.name as equipment','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
+                    ->orderBy('inventory_histories.id','asc')->paginate(10);
+        
+        return view('inventory_histories.index')
+                        ->with(compact('data'));
     }
     
-    public function action(Request $request)
+    public function fetch_data(Request $request)
     {
-            if($request->ajax())
-            {
-            $output = '';
+        if($request->ajax())
+        {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
             $query = $request->get('query');
-            if($query != '')
-            {
-            $data = DB::table('inventory_histories')
-            ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
-            ->join('situations','inventory_histories.situation_id','=','situations.id' )
-            ->join('projects','inventory_histories.project_id','=','projects.id' )
-            ->join('employees','inventory_histories.employee_id','=','employees.id' )
-            ->join('users','inventory_histories.user_id','=','users.id' )
-            ->where('issue_date', 'like','%'. $query .'%')
-            ->orWhere('approvedby', 'like','%'. $query .'%')
-            ->orWhere('projects.name', 'like','%'. $query .'%')
-            ->orWhere('situations.name', 'like','%'. $query .'%')
-            ->orWhere('employees.name', 'like','%'. $query .'%')
-            ->orWhere('equipments.name', 'like','%'. $query .'%')
-            ->orWhere('users.name', 'like','%'. $query .'%')
-            ->select('equipments.name as equipment','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
-            ->orderBy('inventory_histories.id','desc')
-            ->get();              
-            }
-            else
-            {
-            $data = DB::table('inventory_histories')
-            ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
-            ->join('situations','inventory_histories.situation_id','=','situations.id' )
-            ->join('projects','inventory_histories.project_id','=','projects.id' )
-            ->join('employees','inventory_histories.employee_id','=','employees.id' )
-            ->join('users','inventory_histories.user_id','=','users.id' )
-            ->select('equipments.name as equipment','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
-            ->orderBy('inventory_histories.id','desc')
-            ->paginate(20);
-           
-            }
-           
-            $total_row = 0;
-            $pagination = 0;
-            $total_row = $data->count();
-            if($total_row > 0)
-            {
-                $i = 1;
+            $query = str_replace(" ", "%", $query);
 
-                foreach($data as $row)
-                {
-                    $output .= '
-                    <tr>
-                    <td>  '. $i++ .' </td>
-                    <td>'. $row->issue_date .' </td>
-                    <td>'. $row->employee.' </td>
-                    <td>'. $row->equipment.' </td>
-                    <td>'. $row->project .'</td>
-                    <td>'. $row->status .' </td>
-                    <td>'. $row->approvedby .' </td>
-                    <td>'. $row->postedby .' </td>
-                    <td>
-                         <div class=btn-group>
-                             <button type="button" name="show" id="'.$row->id.'" class="btn btn-success show"><i class="glyphicon glyphicon-eye-open"></i></button>
-                             <button type="button" name="edit" id="'.$row->id.'" class="btn btn-warning edit"><i class="glyphicon glyphicon-edit"></i></button>                  
-                        </div>
-                    </td>  
-                    </tr>
-                   
-                    ';
-                }
-                $pagination = '
-                <div class=d-flex justify-content-center>
-                '. $data->links('vendor.pagination.default').'
-                </div>
-                ';
-            }
-            else
-            {
-            $output = '
-            <tr>
-                <td stlye=align:center colspan=5>No Data Found</td>
-            </tr>
-            ';
-            }
-            $data = array(
-            'table_data'  => $output,
-            'total_data'  => $total_row,
-            'pagination'  => $pagination
-            );
+            $data = DB::table('inventory_histories')
+                    ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
+                    ->join('situations','inventory_histories.situation_id','=','situations.id' )
+                    ->join('projects','inventory_histories.project_id','=','projects.id' )
+                    ->join('employees','inventory_histories.employee_id','=','employees.id' )
+                    ->join('users','inventory_histories.user_id','=','users.id' )
+                    ->where('issue_date', 'like','%'. $query .'%')
+                    ->orWhere('approvedby', 'like','%'. $query .'%')
+                    ->orWhere('projects.name', 'like','%'. $query .'%')
+                    ->orWhere('situations.name', 'like','%'. $query .'%')
+                    ->orWhere('employees.name', 'like','%'. $query .'%')
+                    ->orWhere('equipments.name', 'like','%'. $query .'%')
+                    ->orWhere('equipments.computer_name', 'like','%'. $query .'%')
+                    ->orWhere('equipments.serialnumber', 'like','%'. $query .'%')
+                    ->orWhere('users.name', 'like','%'. $query .'%')
+                    ->select('equipments.name as equipment','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
+                    ->orderBy($sort_by, $sort_type)
+                    ->paginate(10);
 
-            echo json_encode($data);
-            }
-        
+            return view('inventory_histories.pagination', compact('data'))->render();     
+
+        }          
     }
-
-
-
-
 
 
     /**
@@ -295,7 +242,9 @@ class InventoryHistoryController extends AppBaseController
 
             return redirect(route('inventoryHistories.index'));
         }
+
     }
+
 
     /**
      *  function to destroy document if it is change

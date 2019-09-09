@@ -26,7 +26,7 @@
 <div class="form-group">
     {!! Form::label('equipment_id', 'Device Name:',['class' => 'col-sm-3 control-label']) !!}
      <div class="col-sm-8">
-         {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
+    {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
 </div>
 </div>
 

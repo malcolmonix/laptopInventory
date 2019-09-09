@@ -20,8 +20,11 @@ class DashboardPagesController extends Controller
                     ->join('situations as s','e.situation_id','=','s.id' )
                     ->join('equipment_types as et','e.equipment_type_id','=','et.id' )
                     ->leftjoin('employees as em','e.user_id','=','em.id')
-                    ->select('e.name as name','em.name as employee','e.model','e.serialnumber','e.comment','e.id','et.name as equipment_type','s.name as status','e.deleted_at','e.created_at','e.updated_at')
-                    ->orderBy('e.name','asc')->paginate(20);
+
+                    ->where('e.situation_id','1')
+                    ->select('e.name as name','em.name as employee','e.serialnumber','e.computer_name','e.model','e.serialnumber','e.comment','e.id','et.name as equipment_type','s.name as status','e.deleted_at','e.created_at','e.updated_at')
+                    ->orderBy('e.name','asc')->paginate(10);
+
 
         return view('dashboard.index')
                ->with('equipment', $equipment);

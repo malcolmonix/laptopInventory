@@ -42,7 +42,9 @@
                         <span class="fa fa-envelope"></span>
                     </div>
                     <div class="widget-data">
-                        <div class="widget-int num-count">{{App\Models\Employee::where('active','1')->count()}}</div>
+
+                        <div class="widget-int num-count">{{App\Models\Equipment::where('situation_id','1')->count()}}</div>
+
                         <div class="widget-title">Employee</div>
                         <div class="widget-subtitle">With your Equipment</div>
                     </div>
@@ -101,13 +103,12 @@
                     <tr>
                         <th>Sn</th>
                         <th>Employee</th>
-                        <th>Project</th>
-                        <th>Equipment Name</th>
+                        <th>Name</th>
+                        <th>Tag/Serial Number</th>
+                        <th>Computer Name</th>
                         <th>Model</th>
                         <th>Serial Number</th>
                         <th>Type</th>
-                        <th>Status</th>
-                        
                     </tr>
                     </thead>
                     <tbody>
@@ -115,14 +116,12 @@
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{$equipments->employee}}</td>
-                            <td>{{$equipments->project}}</td>
-                            <td>{{$equipments->name}}</td>
+                            <td class="table-text-right tooltip-enable-mandatory" data-toggle="tooltip" data-container="#tableRoceMovement" data-original-title="{{ isset($equipments->comment) ? $equipments->comment:'No RAM, HDD info' }}" title="{{ isset($equipments->comment) ? $equipments->comment:'No RAM, HDD info' }}"data-placement="bottom" data-html="true" onmouseenter="tooltipEnterEvent($(this))" onmouseleave="tooltipLeaveEvent($(this))">{{$equipments->name}}</td>
+                            <td>{{ $equipments->serialnumber }} </td>
+                            <td>{{ $equipments->computer_name }} </td>
                             <td>{{$equipments->model}}</td>
                             <td>{{$equipments->serialnumber}}</td>
-                            <td>{{$equipments->equipment_type}}</td>
-                            <td>{{$equipments->status}}</td>
-                            
-                            
+                            <td>{{$equipments->equipment_type}}</td>                            
                         </tr>
                     @endforeach
                     </tbody>
