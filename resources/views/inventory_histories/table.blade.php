@@ -18,8 +18,8 @@
             <th class="sorting" data-sorting_type="asc" data-column_name="post_computername" style="cursor: pointer">Computer Name<span id="post_computername_icon"></span></th>
             <th class="sorting" data-sorting_type="asc" data-column_name="post_project" style="cursor: pointer">Project<span id="post_project_icon"></span></th>
             <th class="sorting" data-sorting_type="asc" data-column_name="post_status" style="cursor: pointer">Status<span id="post_status_icon"></span></th>
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_approvedby" style="cursor: pointer">Approved by<span id="post_approvedby_icon"></span></th>
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_postedby" style="cursor: pointer">Posted by<span id="post_postedby_icon"></span></th>
+            {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_approvedby" style="cursor: pointer">Approved by<span id="post_approvedby_icon"></span></th> --}}
+            {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_postedby" style="cursor: pointer">Posted by<span id="post_postedby_icon"></span></th> --}}
 
             <th colspan="2">Action</th>
         </tr>
@@ -48,6 +48,8 @@
 </div>
 </div>
 </div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

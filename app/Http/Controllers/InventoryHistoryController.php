@@ -47,8 +47,8 @@ class InventoryHistoryController extends AppBaseController
                     ->join('projects','inventory_histories.project_id','=','projects.id' )
                     ->join('employees','inventory_histories.employee_id','=','employees.id' )
                     ->join('users','inventory_histories.user_id','=','users.id' )
-                    ->select('equipments.name as equipment','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
-                    ->orderBy('inventory_histories.id','asc')->paginate(10);
+                    ->select('equipments.name as equipment', 'equipments.brand_id as brand_id','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
+                    ->orderBy('inventory_histories.id','asc')->paginate(60);
         
         return view('inventory_histories.index')
                         ->with(compact('data'));
@@ -80,7 +80,7 @@ class InventoryHistoryController extends AppBaseController
                     ->orWhere('users.name', 'like','%'. $query .'%')
                     ->select('equipments.name as equipment','equipments.id as equipment_id','equipments.comment','equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
                     ->orderBy($sort_by, $sort_type)
-                    ->paginate(10);
+                    ->paginate(15);
 
             return view('inventory_histories.pagination', compact('data'))->render();     
 

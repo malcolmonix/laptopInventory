@@ -13,13 +13,13 @@
     <td>  {{ ++$i }} </td>
     <td>{{ $row->issue_date }} </td>
     <td>{{ $row->employee }} </td>
-    <td class="table-text-right tooltip-enable-mandatory" data-toggle="tooltip" data-container="#tableRoceMovement" data-original-title="{{ isset($row->comment) ? $row->comment:'No RAM, HDD info' }}" title="{{ isset($row->comment) ? $row->comment:'No RAM, HDD info' }}"data-placement="bottom" data-html="true" onmouseenter="tooltipEnterEvent($(this))" onmouseleave="tooltipLeaveEvent($(this))" >{{ $row->equipment }} </td>
+    <td class="table-text-right tooltip-enable-mandatory" data-toggle="tooltip" data-container="#tableRoceMovement" data-original-title="{{ isset($row->comment) ? $row->comment:'No RAM, HDD info' }}" title="{{ isset($row->comment) ? $row->comment:'No RAM, HDD info' }}"data-placement="bottom" data-html="true" onmouseenter="tooltipEnterEvent($(this))" onmouseleave="tooltipLeaveEvent($(this))" >{{App\Models\Brand::find($row->brand_id)->name }} {{ $row->equipment }} </td>
     <td>{{ $row->serialnumber }}  </td>
-    <td>{{ $row->computer_name }}  </td>
+    <td> {{ $row->computer_name }} </td>
     <td>{{ $row->project }}</td>
     <td>{{ $row->status }} </td>
-    <td>{{ $row->approvedby }} </td>
-    <td>{{ $row->postedby }}</td>
+    {{-- <td>{{ $row->approvedby }} </td> --}}
+    {{-- <td>{{ $row->postedby }}</td> --}}
     <td>
     {!! Form::open(['route' => ['inventoryHistories.destroy', $row->id], 'method' => 'delete']) !!}
         <div class='btn-group'>

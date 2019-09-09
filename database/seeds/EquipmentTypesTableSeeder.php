@@ -49,6 +49,38 @@ class EquipmentTypesTableSeeder extends Seeder
                 'created_at' => '2019-07-26 09:42:30',
                 'updated_at' => '2019-07-26 09:42:30',
             ),
+            4 => 
+            array (
+                'id' => 5,
+                'name' => 'ACER',
+                'deleted_at' => '2019-07-30 11:44:43',
+                'created_at' => '2019-07-30 11:35:58',
+                'updated_at' => '2019-07-30 11:44:43',
+            ),
+            5 => 
+            array (
+                'id' => 6,
+                'name' => 'MSI',
+                'deleted_at' => '2019-07-30 11:44:34',
+                'created_at' => '2019-07-30 11:40:55',
+                'updated_at' => '2019-07-30 11:44:34',
+            ),
+            6 => 
+            array (
+                'id' => 7,
+                'name' => 'ASUS',
+                'deleted_at' => '2019-07-30 11:44:20',
+                'created_at' => '2019-07-30 11:41:43',
+                'updated_at' => '2019-07-30 11:44:20',
+            ),
+            7 => 
+            array (
+                'id' => 8,
+                'name' => 'ARUBAS',
+                'deleted_at' => NULL,
+                'created_at' => '2019-09-06 11:48:46',
+                'updated_at' => '2019-09-06 11:48:46',
+            ),
         ));
         
         

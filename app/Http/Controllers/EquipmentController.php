@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateEquipmentRequest;
 use App\Http\Requests\UpdateEquipmentRequest;
-use App\Repositories\EquipmentRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Flash;
-use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
+use App\Models\Brand;
 use App\Models\EquipmentType;
 use App\Models\Situation;
-use App\Models\Brand;
+use App\Repositories\EquipmentRepository;
+use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Response;
 
 class EquipmentController extends AppBaseController
 {
@@ -36,17 +35,16 @@ class EquipmentController extends AppBaseController
     {
 
         $data = DB::table('equipments')
-                ->join('situations','equipments.situation_id','=','situations.id' )
-                ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
-                ->orderBy('equipments.name','asc')
-                ->paginate(10);
+            ->join('situations', 'equipments.situation_id', '=', 'situations.id')
+            ->select('equipments.id as id', 'equipments.name	 as equipmentname', 'equipments.serialnumber as serialnumber', 'equipments.computer_name as computer_name', 'situations.Name as status')
+            ->orderBy('equipments.name', 'asc')
+            ->paginate(20);
 
-        return view('equipment.index',compact('data'))->render();
+        return view('equipment.index', compact('data'))->render();
     }
     public function fetch_data(Request $request)
     {
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             $sort_by = $request->get('sortby');
             $sort_type = $request->get('sorttype');
             $query = $request->get('query');
@@ -54,23 +52,21 @@ class EquipmentController extends AppBaseController
 
             $data = DB::table('equipments')
 
-                ->join('situations','equipments.situation_id','=','situations.id' )
-                ->orWhere('equipments.name', 'like','%'. $query .'%')
-                ->orWhere('equipments.serialnumber', 'like','%'. $query .'%')
-                ->orWhere('equipments.computer_name', 'like','%'. $query .'%')
-                ->orWhere('situations.Name', 'like','%'. $query .'%')
-                ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
-                ->orderBy('equipments.name','asc')
+                ->join('situations', 'equipments.situation_id', '=', 'situations.id')
+                ->orWhere('equipments.name', 'like', '%' . $query . '%')
+                ->orWhere('equipments.serialnumber', 'like', '%' . $query . '%')
+                ->orWhere('equipments.computer_name', 'like', '%' . $query . '%')
+                ->orWhere('situations.Name', 'like', '%' . $query . '%')
+                ->select('equipments.id as id', 'equipments.name	 as equipmentname', 'equipments.serialnumber as serialnumber', 'equipments.computer_name as computer_name', 'situations.Name as status')
+                ->orderBy('equipments.name', 'asc')
 
-                ->paginate(10);      
+                ->paginate(20);
 
-            return view('equipment.pagination', compact('data'))->render();     
+            return view('equipment.pagination', compact('data'))->render();
 
-        }          
+        }
     }
-    
 
-          
     /**
      * Show the form for creating a new Equipment.
      *
@@ -79,13 +75,13 @@ class EquipmentController extends AppBaseController
     public function create()
     {
         $data['equipment_type'] = EquipmentType::pluck('name', 'id');
-        $data['situation'] = Situation::pluck('name','id');
+        $data['situation'] = Situation::pluck('name', 'id');
 
-        $brand = Brand::pluck('name','id');
-        
+        $brand = Brand::pluck('name', 'id');
+
         return view('equipment.create')
-                ->with('brand',$brand)
-                ->with('data', $data);
+            ->with('brand', $brand)
+            ->with('data', $data);
 
     }
 
@@ -118,11 +114,9 @@ class EquipmentController extends AppBaseController
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
 
-       
-        $equipment_types = DB::table('equipment_types')->where('id',$equipment->equipment_type_id)->first();
-        $situations = DB::table('situations')->where('id',$equipment->situation_id)->first();
-        $brands = DB::table('brands')->where('id',$equipment->brand_id)->first();
-
+        $equipment_type = DB::table('equipment_types')->where('id', $equipment->equipment_type_id)->first();
+        $situation = DB::table('situations')->where('id', $equipment->situation_id)->first();
+        $brand = DB::table('brands')->where('id', $equipment->brand_id)->first();
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -132,15 +126,12 @@ class EquipmentController extends AppBaseController
 
         return view('equipment.show')
 
-        ->with('situation', $situations)
-        ->with('brand',$brands)
-        ->with('equipment_type',$equipment_types)
-
-        ->with('situation', $situation)
-        ->with('brand',$brand)
-        ->with('equipment_type',$equipment_type)
-
-        ->with('equipment', $equipment);
+            ->with('situation', $situation)
+            ->with('equipment_type', $equipment_type)
+            ->with('situation', $situation)
+            ->with('brand', $brand)
+            ->with('equipment_type', $equipment_type)
+            ->with('equipment', $equipment);
     }
 
     /**
@@ -153,9 +144,9 @@ class EquipmentController extends AppBaseController
     public function edit($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
-        $equipment_type = EquipmentType::pluck('name', 'id');
-        $situation = Situation::pluck('name','id');
-        $brand = Brand::pluck('name','id');
+        $data['equipment_type'] = EquipmentType::pluck('name', 'id');
+        $data['situation'] = Situation::pluck('name', 'id');
+        $data['brand'] = Brand::pluck('name', 'id');
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -164,10 +155,10 @@ class EquipmentController extends AppBaseController
         }
 
         return view('equipment.edit')
-        ->with('situation', $situation)
-        ->with('brand',$brand)
-        ->with('equipment_type',$equipment_type)
-        ->with('equipment', $equipment);
+            ->with('data', $data)
+            // ->with('brand', $brand)
+            // ->with('equipment_type', $equipment_type)
+            ->with('equipment', $equipment);
     }
 
     /**

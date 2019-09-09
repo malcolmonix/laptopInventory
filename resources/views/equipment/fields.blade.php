@@ -1,23 +1,25 @@
 {{ Form::hidden('user_id', Auth::user()->id) }}
 
 
-<!-- Name Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('name', 'Device Name:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Model Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('model', 'Model:') !!}
-    {!! Form::text('model', null, ['class' => 'form-control', 'placeholder' => 'Enter model of device']) !!}
-</div>
-
 <!-- Brand Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('brand_id', 'Brand:') !!}
-    {!! Form::select('brand_id',  $brand, null, ['class' => 'form-control']) !!}
+    {!! Form::select('brand_id',  $data['brand'], null, ['class' => 'form-control']) !!}
 </div>
+
+<!-- Name Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('name', 'Device Name:') !!}
+    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'e.g. Latitude 3570, Pavilion 15, X550JX']) !!}
+</div>
+
+<!-- Model Field -->
+{{-- <div class="form-group col-sm-6">
+    {!! Form::label('model', 'Model:') !!}
+    {!! Form::text('model', null, ['class' => 'form-control', 'placeholder' => 'Enter model of device']) !!}
+</div> --}}
+
+
 
 <!-- Serialnumber Field -->
 <div class="form-group col-sm-6">
@@ -59,7 +61,7 @@
 <!-- Computer Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('computer_name', 'Computer Name:') !!}
-    {!! Form::text('computer_name', null, ['class' => 'form-control']) !!}
+    {!! Form::text('computer_name', null, ['class' => 'form-control', 'placeholder' => 'e.g. NGRComp0000']) !!}
 </div>
 
 <!-- Mac Address Field -->
