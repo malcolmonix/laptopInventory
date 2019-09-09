@@ -34,17 +34,26 @@ class EquipmentController extends AppBaseController
      */
     public function index(Request $request)
     {
-        return view('equipment.index');
+
+        $data = DB::table('equipments')
+                ->join('situations','equipments.situation_id','=','situations.id' )
+                ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
+                ->orderBy('equipments.name','asc')
+                ->paginate(10);
+
+        return view('equipment.index',compact('data'))->render();
     }
-    public function search(Request $request)
+    public function fetch_data(Request $request)
     {
-            if($request->ajax())
-            {
-            $output = '';
+        if($request->ajax())
+        {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
             $query = $request->get('query');
-            if($query != '')
-            {
-                $data = DB::table('equipments')
+            $query = str_replace(" ", "%", $query);
+
+            $data = DB::table('equipments')
+
                 ->join('situations','equipments.situation_id','=','situations.id' )
                 ->orWhere('equipments.name', 'like','%'. $query .'%')
                 ->orWhere('equipments.serialnumber', 'like','%'. $query .'%')
@@ -52,62 +61,16 @@ class EquipmentController extends AppBaseController
                 ->orWhere('situations.Name', 'like','%'. $query .'%')
                 ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
                 ->orderBy('equipments.name','asc')
-                ->get();              
-            }
-            else
-            {
-                $data = DB::table('equipments')
-                ->join('situations','equipments.situation_id','=','situations.id' )
-                ->select('equipments.id as id','equipments.name	 as equipmentname','equipments.serialnumber as serialnumber','equipments.computer_name as computer_name', 'situations.Name as status')
-                ->orderBy('equipments.name','asc')
-                ->paginate(20);
-           
-            }
-           
-            $total_row = 0;
-            $total_row = $data->count();
-           
-            if($total_row > 0)
-            {
-                $i = 1;
 
-                foreach($data as $row)
-                {
-                    $output .= '
-                    <tr>
-                    <td> '. $i++ .'</a> </td>
-                    <td>'. $row->equipmentname .' </td>
-                    <td>'. $row->serialnumber .' </td>
-                    <td>'. $row->computer_name .' </td>
-                    <td>'. $row->status .'</td>
-                    
-                    <td>
-                         <div class=btn-group>
-                             <button type="button" name="show" id="'. $row->id .'" class="btn btn-success show"><i class="glyphicon glyphicon-eye-open"></i></button>
-                             <button type="button" name="edit" id="'. $row->id .'" class="btn btn-warning edit"><i class="glyphicon glyphicon-edit"></i></button>                  
-                        </div>
-                    </td>  
-                    </tr>
-                    ';
-                }
-            }
-            else
-            {
-            $output = '
-            <tr>
-                <td stlye=align:center colspan=5>No Data Found</td>
-            </tr>
-            ';
-            }
-            $data = array(
-            'table_data'  => $output,
-            'total_data'  => $total_row
-            );
+                ->paginate(10);      
 
-            echo json_encode($data);
-            }
-        
+            return view('equipment.pagination', compact('data'))->render();     
+
+        }          
     }
+    
+
+          
     /**
      * Show the form for creating a new Equipment.
      *
@@ -117,9 +80,13 @@ class EquipmentController extends AppBaseController
     {
         $data['equipment_type'] = EquipmentType::pluck('name', 'id');
         $data['situation'] = Situation::pluck('name','id');
-        $data['brand'] = Brand::pluck('name','id');
+
+        $brand = Brand::pluck('name','id');
         
-        return view('equipment.create')->with('data', $data);
+        return view('equipment.create')
+                ->with('brand',$brand)
+                ->with('data', $data);
+
     }
 
     /**
@@ -150,9 +117,12 @@ class EquipmentController extends AppBaseController
     public function show($id)
     {
         $equipment = $this->equipmentRepository->findWithoutFail($id);
-        $equipment_type = EquipmentType::pluck('name', 'id');
-        $situation = Situation::pluck('name','id');
-        $brand = Brand::pluck('name','id');
+
+       
+        $equipment_types = DB::table('equipment_types')->where('id',$equipment->equipment_type_id)->first();
+        $situations = DB::table('situations')->where('id',$equipment->situation_id)->first();
+        $brands = DB::table('brands')->where('id',$equipment->brand_id)->first();
+
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -161,9 +131,15 @@ class EquipmentController extends AppBaseController
         }
 
         return view('equipment.show')
+
+        ->with('situation', $situations)
+        ->with('brand',$brands)
+        ->with('equipment_type',$equipment_types)
+
         ->with('situation', $situation)
         ->with('brand',$brand)
         ->with('equipment_type',$equipment_type)
+
         ->with('equipment', $equipment);
     }
 

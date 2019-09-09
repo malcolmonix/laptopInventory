@@ -42,9 +42,11 @@ Route::post('inventory/update', 'InventoryHistoryController@update');
 
 
 Route::get('inventory_histories/action', 'InventoryHistoryController@action')->name('inventory_histories.action');
-Route::get('employees/search', 'EmployeeController@search')->name('employees.search');
-Route::get('equipment/search', 'EquipmentController@search')->name('equipment.search');
 
+Route::get('equipment/search', 'EquipmentController@search')->name('equipment.search');
+Route::get('inventoryHistories/fetch_data', 'InventoryHistoryController@fetch_data');
+Route::get('employees/fetch_data', 'EmployeeController@fetch_data');
+Route::get('equipment/fetch_data', 'EquipmentController@fetch_data');
 
 route::resource('dashboard','DashboardPagesController')->middleware('checkofficer');
 
@@ -53,6 +55,7 @@ Route::resource('users', 'UserController')->middleware('checkmanager');
 Route::resource('employees', 'EmployeeController')->middleware('checkofficer');
 
 Route::resource('equipment', 'EquipmentController')->middleware('checkofficer');
+
 
 Route::resource('equipmentTypes', 'EquipmentTypeController')->middleware('checkofficer');
 
