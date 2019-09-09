@@ -28,13 +28,17 @@
 <!-- Equipment Type Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('equipment_type_id', 'Device Category') !!}
+
     {!! Form::select('equipment_type_id', $data['equipment_type'], null, ['class' => 'form-control']) !!}
+
 </div>
 
 <!-- Situation Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('situation_id', 'Device Status:') !!}
+
     {!! Form::select('situation_id', $data['situation'], null, ['class' => 'form-control']) !!}
+
 </div>
 
 
@@ -78,7 +82,9 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
+
     {!! Form::open(['route' => ['equipment.destroy', isset($equipment->id)], 'method' => 'delete']) !!}
+
         {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
         <a href="{!! route('equipment.index') !!}" class="btn btn-warning">Cancel</a>
         {!! Form::button('Delete', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}

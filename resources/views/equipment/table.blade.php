@@ -5,20 +5,25 @@
     <div class="form-group">
         <input type="text" name="search" id="search" class="form-control" placeholder="search equipments" />
     </div>
+
 <div class="table-responsive">
     <table class="table" id="equipment-table">
         <thead>
             <tr>
+
                 <th >SN</th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_name" style="cursor: pointer">Name<span id="post_name_icon"></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_serial" style="cursor: pointer">Serial Number<span id="post_serial_icon"></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_computer" style="cursor: pointer">Computer Name<span id="post_computer_icon"></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_status" style="cursor: pointer">Status<span id="post_status_icon"></span></th>      
+
                 <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
+
         @include('equipment.pagination')
+
         </tbody>
     </table>
     <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
@@ -31,6 +36,7 @@
 </div>
 </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
@@ -103,6 +109,7 @@ $(document).ready(function(){
         $(this).parent().addClass('active');
   fetch_data(page, sort_type, column_name, query);
  });
+
 
 });
 </script>

@@ -17,7 +17,14 @@
     {!! Form::label('brand', isset($brand->name)? $brand->name:'' ) !!}
 </div>
 
+<!-- Brand Id Field -->
+<div class="form-group">
+    {!! Form::label('brand_id', 'Brand Id:') !!}
+    <p>{!! $equipment->brand_id !!}</p>
+</div>
+
 <!-- Serialnumber Field -->
+
 <div class="form-group col-sm-6">
     {!! Form::label('serialnumber', 'Serial Number:',['class' => 'col-sm-3 control-label']) !!}
     {!! Form::label('serialnumber', $equipment->serialnumber) !!}
@@ -33,12 +40,21 @@
 <div class="form-group col-sm-6">
     {!! Form::label('Situation', 'Situation:',['class' => 'col-sm-3 control-label']) !!}
     {!! Form::label('Situation', $situation->name) !!}
+
+</div>
+
+<!-- Situation Id Field -->
+<div class="form-group">
+    {!! Form::label('situation_id', 'Situation Id:') !!}
+    <p>{!! $equipment->situation_id !!}</p>
 </div>
 
 <!-- Status Field -->
+
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:',['class' => 'col-sm-3 control-label']) !!}
     {!! Form::label('status', $equipment->status) !!}
+
 </div>
 
 

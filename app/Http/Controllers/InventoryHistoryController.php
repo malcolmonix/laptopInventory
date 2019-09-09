@@ -40,6 +40,7 @@ class InventoryHistoryController extends AppBaseController
      */
     public function index(Request $request)
     {
+
         $data = DB::table('inventory_histories')
                     ->join('equipments','inventory_histories.equipment_id','=','equipments.id' )
                     ->join('situations','inventory_histories.situation_id','=','situations.id' )
@@ -241,7 +242,9 @@ class InventoryHistoryController extends AppBaseController
 
             return redirect(route('inventoryHistories.index'));
         }
+
     }
+
 
     /**
      *  function to destroy document if it is change

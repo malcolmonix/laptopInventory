@@ -6,19 +6,24 @@
         <input type="text" name="search" id="search" class="form-control" placeholder="search employees" />
     </div>
 <div class="table-responsive">
+<h3 style="align:center">Record Found : <span id="total_records"></span></h3>
     <table class="table" id="employees-table">
         <thead>
             <tr>
+
                 <th >SN</th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="id" style="cursor: pointer" >Name<span id="id_icon"></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_employee" style="cursor: pointer">Employee ID#<span id="post_employee_icon"></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_position" style="cursor: pointer">Position<span id="post_position_icon"></span></th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_project" style="cursor: pointer">Project<span id="post_project_icon"></span></th>
+
                 <th colspan="2">Action</th>
             </tr>
         </thead>
         <tbody>
+
         @include('employees.pagination')
+
         </tbody>
     </table>
     <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
@@ -32,6 +37,7 @@
 </div>
 </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
@@ -104,6 +110,7 @@ $(document).ready(function(){
         $(this).parent().addClass('active');
   fetch_data(page, sort_type, column_name, query);
  });
+
 
 });
 </script>

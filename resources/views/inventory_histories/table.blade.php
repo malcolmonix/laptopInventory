@@ -6,6 +6,7 @@
         <input type="text" name="search" id="search" class="form-control" placeholder="search inventory history" />
     </div>
     <div class="table-responsive">
+
     <table class="table table-hover">
         <thead>
         <tr>
@@ -19,11 +20,13 @@
             <th class="sorting" data-sorting_type="asc" data-column_name="post_status" style="cursor: pointer">Status<span id="post_status_icon"></span></th>
             <th class="sorting" data-sorting_type="asc" data-column_name="post_approvedby" style="cursor: pointer">Approved by<span id="post_approvedby_icon"></span></th>
             <th class="sorting" data-sorting_type="asc" data-column_name="post_postedby" style="cursor: pointer">Posted by<span id="post_postedby_icon"></span></th>
+
             <th colspan="2">Action</th>
         </tr>
         </thead>
             
         <tbody>
+
             @include('inventory_histories.pagination')
         </tbody>
                 
@@ -40,11 +43,13 @@
     <input type="hidden" name="hidden_sort_type7" id="hidden_sort_type7" value="asc" />
     <input type="hidden" name="hidden_sort_type8" id="hidden_sort_type8" value="asc" />
     
+
 </div>
 </div>
 </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -118,6 +123,7 @@ $(document).ready(function(){
         $(this).parent().addClass('active');
   fetch_data(page, sort_type, column_name, query);
  });
+
 
 });
 </script>

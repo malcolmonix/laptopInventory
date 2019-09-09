@@ -32,6 +32,7 @@ class EmployeeController extends AppBaseController
      */
     public function index(Request $request)
     {
+
         
         $data = DB::table('employees')
                 ->join('projects','employees.project_id','=','projects.id' )
@@ -66,6 +67,7 @@ class EmployeeController extends AppBaseController
 
         }          
     }
+
     /**
      * Show the form for creating a new Employee.
      *

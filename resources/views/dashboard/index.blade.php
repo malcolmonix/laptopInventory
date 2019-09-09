@@ -42,7 +42,9 @@
                         <span class="fa fa-envelope"></span>
                     </div>
                     <div class="widget-data">
+
                         <div class="widget-int num-count">{{App\Models\Equipment::where('situation_id','1')->count()}}</div>
+
                         <div class="widget-title">Employee</div>
                         <div class="widget-subtitle">With your Equipment</div>
                     </div>

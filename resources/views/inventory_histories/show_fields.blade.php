@@ -51,7 +51,9 @@
 <div class="form-group col-sm-6">
     {!! Form::open(['route' => ['inventoryHistories.destroy', $inventoryHistory->id], 'method' => 'delete']) !!}
         {!! Form::button('Delete', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
+
         <a href="{!! route('inventoryHistories.edit', [$inventoryHistory->id]) !!}" class='btn btn-success'>edit</a>
+
         <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Back</a>
     {!! Form::close() !!}
 </div>
