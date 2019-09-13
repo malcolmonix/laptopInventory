@@ -97,7 +97,7 @@ $(document).ready(function(){
  });
 
  $(document).on('click', '.pagination a', function(event){
-  event.preventDefault();
+//   event.preventDefault();
   var page = $(this).attr('href').split('page=')[1];
   $('#hidden_page').val(page);
   var column_name = $('#hidden_column_name').val();

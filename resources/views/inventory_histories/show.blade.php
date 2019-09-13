@@ -12,12 +12,11 @@
         <div class="box box-primary">
             <div class="box-body showblade__details">               
 
-                {{-- @include('inventory_histories.show_fields') --}}
                 <div class="showblade__details--item">
                     <h3>Equipment in Possesion:</h3>
                 <p><strong>{{ App\Models\Brand::find($inventoryHistory->brand_id)->name }} {{ $inventoryHistory->equipment }} 
                 </strong>- <em>{{ $inventoryHistory->serialnumber }}</em> - {{ $inventoryHistory->computer_name  }}</p>
-                0
+              
                 </div>
 
                 <div class="showblade__details--item">

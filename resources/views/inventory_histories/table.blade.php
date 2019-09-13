@@ -9,7 +9,7 @@
 
     <table class="table table-hover">
         <thead>
-        <tr>
+        <tr class="heading--table">
             <th>SN</th>
             {{-- <th class="sorting" data-sorting_type="asc" data-column_name="id" style="cursor: pointer">Date<span id="id_icon"></span></th> --}}
             <th class="sorting" data-sorting_type="asc" data-column_name="post_employee" style="cursor: pointer">Employee<span id="post_employee_icon"></span></th>

@@ -21,6 +21,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string computer_name
  * @property string mac_address
  * @property string ip_address
+ * @property string ram
+ * @property string processor
+ * @property string disk_type
+ * @property string disk_size
  * @property string comment
  */
 class Equipment extends Model
@@ -48,6 +52,10 @@ class Equipment extends Model
         'computer_name',
         'mac_address',
         'ip_address',
+        'ram',
+        'processor',
+        'disk_type',
+        'disk_size',
         'comment'
     ];
 
@@ -69,6 +77,10 @@ class Equipment extends Model
         'computer_name' => 'string',
         'mac_address' => 'string',
         'ip_address' => 'string',
+        'ram' => 'string',
+        'processor' => 'string',
+        'disk_type' => 'string',
+        'disk_size' => 'string',
         'comment' => 'string'
     ];
 

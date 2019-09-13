@@ -34,6 +34,8 @@ class ProjectController extends AppBaseController
         $this->projectRepository->pushCriteria(new RequestCriteria($request));
         $projects = $this->projectRepository->all();
 
+        // $projects = DB::table('projects')->select('*')->paginate(15);
+
         return view('projects.index')
             ->with('projects', $projects);
     }

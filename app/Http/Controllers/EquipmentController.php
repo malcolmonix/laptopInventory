@@ -36,14 +36,20 @@ class EquipmentController extends AppBaseController
 
         $data = DB::table('equipments')
             ->join('situations', 'equipments.situation_id', '=', 'situations.id')
+            ->join('brands', 'equipments.brand_id', '=', 'brands.id')
             ->select('equipments.id as id', 
                     'equipments.name  as equipmentname', 
                     'equipments.model  as equipment_model', 
+                    'equipments.ram  as ram', 
+                    'equipments.disk_type  as disk_type', 
+                    'equipments.disk_size  as disk_size', 
                     'equipments.serialnumber as serialnumber', 
                     'equipments.computer_name as computer_name', 
+                    'brands.name as brand',
                     'situations.Name as status')->where('equipments.deleted_at', NULL)
+                    ->where('brands.deleted_at', NULL)
             ->orderBy('equipments.name', 'asc')
-            ->paginate(20);
+            ->paginate(40);
 
         return view('equipment.index', compact('data'))->render();
     }
@@ -147,7 +153,7 @@ class EquipmentController extends AppBaseController
         $equipment = $this->equipmentRepository->findWithoutFail($id);
         $data['equipment_type'] = EquipmentType::pluck('name', 'id');
         $data['situation'] = Situation::pluck('name', 'id');
-        $data['brand'] = Brand::pluck('name', 'id');
+        $brand = Brand::pluck('name', 'id');
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
@@ -157,7 +163,7 @@ class EquipmentController extends AppBaseController
 
         return view('equipment.edit')
             ->with('data', $data)
-            // ->with('brand', $brand)
+            ->with('brand', $brand)
             // ->with('equipment_type', $equipment_type)
             ->with('equipment', $equipment);
     }

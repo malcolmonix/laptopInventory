@@ -11,7 +11,7 @@
 @foreach($data as $row)
 <tr class="graybg">
     <td>  {{ ++$i }} </td>
-    <td class="table-text-right tooltip-enable-mandatory" data-toggle="tooltip" data-container="#tableRoceMovement" data-original-title="{{ isset($row->comment) ? $row->comment:'No RAM, HDD info' }}" title="{{ isset($row->comment) ? $row->comment:'No RAM, HDD info' }}"data-placement="bottom" data-html="true" onmouseenter="tooltipEnterEvent($(this))" onmouseleave="tooltipLeaveEvent($(this))">{{ $row->equipment_model }} </td>
+    <td class="table-text-right tooltip-enable-mandatory" data-toggle="tooltip" data-container="#tableRoceMovement" data-original-title="{{ isset($row->ram) ? $row->ram:'No RAM, HDD info' }}" title="{{ isset($row->ram) ? $row->ram . ' ' . $row->disk_size :'No RAM, HDD info' }}"data-placement="bottom" data-html="true" onmouseenter="tooltipEnterEvent($(this))" onmouseleave="tooltipLeaveEvent($(this))">{{ $row->brand }} - {{ $row->equipment_model }} </td>
     <td>{{ $row->serialnumber }} </td>
     <td>{{ $row->computer_name }}  </td>
     
@@ -30,6 +30,9 @@
             {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
         </div>
         {!! Form::close() !!}
+
+
+        
     </td>  
     </tr>
 @endforeach
