@@ -39,7 +39,8 @@
     <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/toastr/toastr.min.css')}}"/>
 
 
-    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('backend/css/design-sheet.css')}}"/> 
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/app.css')}}"/> 
+    <link rel="stylesheet" type="text/css" id="theme" href="{{asset('css/design-sheet.css')}}"/> 
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     @yield('css')
 </head>

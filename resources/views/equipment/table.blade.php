@@ -9,7 +9,7 @@
 <div class="table-responsive">
     <table class="table" id="equipment-table">
         <thead>
-            <tr>
+            <tr class="heading--table">
 
                 <th >SN</th>
                 <th class="sorting" data-sorting_type="asc" data-column_name="post_name" style="cursor: pointer">Name<span id="post_name_icon"></span></th>

@@ -36,7 +36,12 @@ class EquipmentController extends AppBaseController
 
         $data = DB::table('equipments')
             ->join('situations', 'equipments.situation_id', '=', 'situations.id')
-            ->select('equipments.id as id', 'equipments.name	 as equipmentname', 'equipments.serialnumber as serialnumber', 'equipments.computer_name as computer_name', 'situations.Name as status')
+            ->select('equipments.id as id', 
+                    'equipments.name  as equipmentname', 
+                    'equipments.model  as equipment_model', 
+                    'equipments.serialnumber as serialnumber', 
+                    'equipments.computer_name as computer_name', 
+                    'situations.Name as status')->where('equipments.deleted_at', NULL)
             ->orderBy('equipments.name', 'asc')
             ->paginate(20);
 
@@ -51,7 +56,6 @@ class EquipmentController extends AppBaseController
             $query = str_replace(" ", "%", $query);
 
             $data = DB::table('equipments')
-
                 ->join('situations', 'equipments.situation_id', '=', 'situations.id')
                 ->orWhere('equipments.name', 'like', '%' . $query . '%')
                 ->orWhere('equipments.serialnumber', 'like', '%' . $query . '%')
@@ -112,20 +116,17 @@ class EquipmentController extends AppBaseController
      */
     public function show($id)
     {
-        $equipment = $this->equipmentRepository->findWithoutFail($id);
-
-        $equipment_type = DB::table('equipment_types')->where('id', $equipment->equipment_type_id)->first();
-        $situation = DB::table('situations')->where('id', $equipment->situation_id)->first();
-        $brand = DB::table('brands')->where('id', $equipment->brand_id)->first();
+        $equipment = $this->equipmentRepository->findWithoutFail($id);  
+        $equipment_type = EquipmentType::where('id', $equipment->equipment_type_id)->first();
+        $situation = Situation::find($equipment->situation_id);
+        $brand = Brand::where('id', $equipment->brand_id)->first();
 
         if (empty($equipment)) {
             Flash::error('Equipment not found');
-
             return redirect(route('equipment.index'));
         }
 
         return view('equipment.show')
-
             ->with('situation', $situation)
             ->with('equipment_type', $equipment_type)
             ->with('situation', $situation)

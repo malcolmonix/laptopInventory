@@ -191,7 +191,18 @@ class InventoryHistoryController extends AppBaseController
                                 ->join('employees','i.employee_id','=','employees.id' )
                                 ->join('users','i.user_id','=','users.id' )
                                 ->where('i.id','=',$id)
-                                ->select('equipments.name as equipment','employees.name as employee','employees.employee_id', 'projects.name as project','situations.name as status','i.id','i.issue_date','i.approvedby','i.remarks','i.created_at','i.updated_at','users.name as postedby')
+                                ->select('equipments.name as equipment',
+                                        'equipments.serialnumber as serialnumber',
+                                        'equipments.brand_id as brand_id',
+                                        'equipments.computer_name as computer_name',
+                                        'employees.name as employee',
+                                        'employees.employee_id', 
+                                        'projects.name as project',
+                                        'situations.name as status',
+                                        'i.id','i.issue_date',
+                                        'i.approvedby','i.remarks',
+                                        'i.created_at','i.updated_at',
+                                        'users.name as postedby')
                                 ->orderBy('i.id','desc')->first();
                                 
 
@@ -280,7 +291,7 @@ class InventoryHistoryController extends AppBaseController
     {
        
         $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
-        $equipment = Equipment::pluck('name','id');
+        $equipment = Equipment::select('name','serialnumber','computer_name','id')->get();
         $situation = Situation::pluck('name','id');
         $employee = Employee::pluck('name','id');
         $project = Project::pluck('name','id');
