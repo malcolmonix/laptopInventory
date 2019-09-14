@@ -49,7 +49,7 @@ class EquipmentController extends AppBaseController
                     'situations.Name as status')->where('equipments.deleted_at', NULL)
                     ->where('brands.deleted_at', NULL)
             ->orderBy('equipments.name', 'asc')
-            ->paginate(40);
+            ->paginate(20);
 
         return view('equipment.index', compact('data'))->render();
     }
@@ -63,11 +63,22 @@ class EquipmentController extends AppBaseController
 
             $data = DB::table('equipments')
                 ->join('situations', 'equipments.situation_id', '=', 'situations.id')
+                ->join('brands', 'equipments.brand_id', '=', 'brands.id')
                 ->orWhere('equipments.name', 'like', '%' . $query . '%')
                 ->orWhere('equipments.serialnumber', 'like', '%' . $query . '%')
                 ->orWhere('equipments.computer_name', 'like', '%' . $query . '%')
                 ->orWhere('situations.Name', 'like', '%' . $query . '%')
-                ->select('equipments.id as id', 'equipments.name	 as equipmentname', 'equipments.serialnumber as serialnumber', 'equipments.computer_name as computer_name', 'situations.Name as status')
+                ->select('equipments.id as id', 
+                         'equipments.name  as equipmentname', 
+                         'equipments.model  as equipment_model', 
+                         'equipments.ram  as ram', 
+                         'equipments.disk_type  as disk_type', 
+                         'equipments.disk_size  as disk_size', 
+                         'equipments.serialnumber as serialnumber', 
+                         'equipments.computer_name as computer_name', 
+                         'brands.name as brand',
+                         'situations.Name as status')->where('equipments.deleted_at', NULL)
+                        ->where('brands.deleted_at', NULL)
                 ->orderBy('equipments.name', 'asc')
 
                 ->paginate(20);

@@ -2,134 +2,35 @@
 @section('title', 'Dashboard')
 @section('content')
     <div class="page-content-wrap">
-
-        <!-- START WIDGETS -->
         <div class="row">
-            <div class="col-md-3">
-
-                <!-- START WIDGET SLIDER -->
-                <div class="widget widget-default widget-carousel dashboard-infobox">
-                    <div class="owl-carousel" id="owl-example">
-                        <div>
-                            <div class="widget-title">Total Equipments</div>
-                            <div class="widget-subtitle">{{\Carbon\Carbon::today()->diffForHumans()}}</div>
-                            <div class="widget-int">{{App\Models\Equipment::count()}}</div>
-                        </div>
-                        <div>
-                            <div class="widget-title">Available Equipments</div>
-                            <div class="widget-subtitle">Available to Assign</div>
-                            <div class="widget-int">{{App\Models\Equipment::where('situation_id','2')->count()}}</div>
-                        </div>
-                        <div>
-                            <div class="widget-title">Assigned</div>
-                            <div class="widget-subtitle">Currently Assigned</div>
-                            <div class="widget-int">{{App\Models\Equipment::where('situation_id','1')->count()}}</div>
-                        </div>
-                    </div>
-                    <div class="widget-controls">
-                        {{--<a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"--}}
-                        {{--data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>--}}
-                    </div>
+        
+        @foreach($equipment as $data)
+        <div class="col-md-6">
+            <div class="widget widget-default widget-item-icon"
+                onclick="location.href='{{'#'}}';">
+                <div class="widget-item-left">
+                    <span class="fa fa-user"></span>
                 </div>
-                <!-- END WIDGET SLIDER -->
-
-            </div>
-            <div class="col-md-3">
-
-                <!-- START WIDGET MESSAGES -->
-                <div class="widget widget-default widget-item-icon" onclick="location.href='{{url('admin/tasks')}}';">
-                    <div class="widget-item-left">
-                        <span class="fa fa-envelope"></span>
-                    </div>
-                    <div class="widget-data">
-
-                        <div class="widget-int num-count">{{App\Models\Equipment::where('situation_id','1')->count()}}</div>
-
-                        <div class="widget-title">Employee</div>
-                        <div class="widget-subtitle">With your Equipment</div>
-                    </div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
-                           data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                    </div>
-                </div>
-                <!-- END WIDGET MESSAGES -->
-
-            </div>
-            <div class="col-md-3">
-
-                <!-- START WIDGET REGISTRED -->
-                <div class="widget widget-default widget-item-icon"
-                     onclick="location.href='{{'#'}}';">
-                    <div class="widget-item-left">
-                        <span class="fa fa-user"></span>
-                    </div>
-                    <div class="widget-data">
-                        <div class="widget-int num-count">{{App\Models\User::where('active',1)->count()}}</div>
-                        <div class="widget-title">Registred users</div>
-                        <div class="widget-subtitle">Active</div>
-                    </div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
-                           data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                    </div>
-                </div>
-                <!-- END WIDGET REGISTRED -->
-
-            </div>
-            <div class="col-md-3">
-
-                <!-- START WIDGET CLOCK -->
-                <div class="widget widget-danger widget-padding-sm">
-                    <div class="widget-big-int plugin-clock">00:00</div>
-                    <div class="widget-subtitle plugin-date">Loading...</div>
-                    <div class="widget-controls">
-                        <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
-                           data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
-                    </div>
-                    <!--<div class="widget-buttons widget-c1">
-                        <div class="col">
-                            <p>Current Time And Date</p>
-                        </div>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @include('flash::message')
-            <div class="col-md-12">
-                <table class="table table-responsive table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Sn</th>
-                        <th>Employee</th>
-                        <th>Name</th>
-                        <th>Tag/Serial Number</th>
-                        <th>Computer Name</th>
-                        <th>Model</th>
-                        <th>Serial Number</th>
-                        <th>Type</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($equipment as $key => $equipments)
-                        <tr>
-                            <td>{{$key+1}}</td>
-                            <td>{{$equipments->employee}}</td>
-                            <td class="table-text-right tooltip-enable-mandatory" data-toggle="tooltip" data-container="#tableRoceMovement" data-original-title="{{ isset($equipments->comment) ? $equipments->comment:'No RAM, HDD info' }}" title="{{ isset($equipments->comment) ? $equipments->comment:'No RAM, HDD info' }}"data-placement="bottom" data-html="true" onmouseenter="tooltipEnterEvent($(this))" onmouseleave="tooltipLeaveEvent($(this))">{{$equipments->name}}</td>
-                            <td>{{ $equipments->serialnumber }} </td>
-                            <td>{{ $equipments->computer_name }} </td>
-                            <td>{{$equipments->model}}</td>
-                            <td>{{$equipments->serialnumber}}</td>
-                            <td>{{$equipments->equipment_type}}</td>                            
-                        </tr>
+                <div class="widget-data">
+                    <div class="widget-int num-count">{{ $data->equipmentname }}</div>
+                    @foreach($status as $row)
+                        @if($row->equipment_type_id == $data->equipment_type_id)
+                            <div class="widget-subtitle">Assigned: {{App\Models\Equipment::where('situation_id','1')->where('equipment_type_id',$data->equipment_type_id)->count()}} </div>
+                            <div class="widget-subtitle">Instock:  {{App\Models\Equipment::where('situation_id','2')->where('equipment_type_id',$data->equipment_type_id)->count() + App\Models\Equipment::where('situation_id','4')->where('equipment_type_id',$data->equipment_type_id)->count() }} </div>
+                            <div class="widget-subtitle">Faulty: {{App\Models\Equipment::where('situation_id','3')->where('equipment_type_id',$data->equipment_type_id)->count()}} </div>
+                            <div class="widget-subtitle">Lost: {{App\Models\Equipment::where('situation_id','5')->where('equipment_type_id',$data->equipment_type_id)->count()}} </div>
+                            <div class="widget-subtitle">Damage: {{App\Models\Equipment::where('situation_id','6')->where('equipment_type_id',$data->equipment_type_id)->count()}} </div>
+                        @endif
                     @endforeach
-                    </tbody>
-                </table>
-               {{ $equipment->links() }}
+                   <div class="widget-subtitle">TOTAL: {{ $data->totalequipment }} </div>
+                </div>
+                <div class="widget-controls">
+                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
+                    data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                </div>
             </div>
         </div>
-        <!-- END DASHBOARD CHART -->
-
+        @endforeach
+        </div>
     </div>
     @endsection
