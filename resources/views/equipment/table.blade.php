@@ -11,11 +11,11 @@
         <thead>
             <tr class="heading--table">
 
-                <th >SN</th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_name" style="cursor: pointer">Name<span id="post_name_icon"></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_serial" style="cursor: pointer">Serial Number<span id="post_serial_icon"></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_computer" style="cursor: pointer">Computer Name<span id="post_computer_icon"></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_status" style="cursor: pointer">Status<span id="post_status_icon"></span></th>      
+                <th>SN</th>
+                <th>Name</th>
+                <th>Serial Number</th>
+                <th>Computer Name</th>
+                <th>Status</th>      
 
                 <th colspan="3">Action</th>
             </tr>
@@ -65,8 +65,8 @@ $(document).ready(function(){
  
  $(document).on('keyup', '#search', function(){
   var query = $('#search').val();
-  var column_name = $('#hidden_column_name').val();
-  var sort_type = $('#hidden_sort_type').val();
+  var column_name = '';
+  var sort_type = '';
   var page = $('#hidden_page').val();
   fetch_data(page, sort_type, column_name, query);
  });

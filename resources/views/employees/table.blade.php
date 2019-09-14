@@ -11,11 +11,11 @@
         <thead>
             <tr>
 
-                <th >SN</th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="id" style="cursor: pointer" >Name<span id="id_icon"></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_employee" style="cursor: pointer">Employee ID#<span id="post_employee_icon"></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_position" style="cursor: pointer">Position<span id="post_position_icon"></span></th>
-                <th class="sorting" data-sorting_type="asc" data-column_name="post_project" style="cursor: pointer">Project<span id="post_project_icon"></span></th>
+                <th>SN</th>
+                <th>Name</th>
+                <th>Employee ID#</th>
+                <th>Position</th>
+                <th>Project</th>
 
                 <th colspan="2">Action</th>
             </tr>
@@ -66,8 +66,8 @@ $(document).ready(function(){
  
  $(document).on('keyup', '#search', function(){
   var query = $('#search').val();
-  var column_name = $('#hidden_column_name').val();
-  var sort_type = $('#hidden_sort_type').val();
+  var column_name = '';
+  var sort_type = '';
   var page = $('#hidden_page').val();
   fetch_data(page, sort_type, column_name, query);
  });

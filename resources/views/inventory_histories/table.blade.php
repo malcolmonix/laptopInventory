@@ -12,12 +12,12 @@
         <tr class="heading--table">
             <th>SN</th>
             {{-- <th class="sorting" data-sorting_type="asc" data-column_name="id" style="cursor: pointer">Date<span id="id_icon"></span></th> --}}
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_employee" style="cursor: pointer">Employee<span id="post_employee_icon"></span></th>
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_equipment" style="cursor: pointer">Equipment<span id="post_equipment_icon"></span></th>
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_tag" style="cursor: pointer">Tag Number<span id="post_tag_icon"></span></th>
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_computername" style="cursor: pointer">Computer Name<span id="post_computername_icon"></span></th>
+            <th >Employee</th>
+            <th >Equipment</th>
+            <th >Tag Number</th>
+            <th >Computer Name</th>
             {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_project" style="cursor: pointer">Project<span id="post_project_icon"></span></th> --}}
-            <th class="sorting" data-sorting_type="asc" data-column_name="post_status" style="cursor: pointer">Status<span id="post_status_icon"></span></th>
+            <th >Status<span id="post_status_icon"></span></th>
             {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_approvedby" style="cursor: pointer">Approved by<span id="post_approvedby_icon"></span></th> --}}
             {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_postedby" style="cursor: pointer">Posted by<span id="post_postedby_icon"></span></th> --}}
 
@@ -81,8 +81,8 @@ $(document).ready(function(){
  
  $(document).on('keyup', '#search', function(){
   var query = $('#search').val();
-  var column_name = $('#hidden_column_name').val();
-  var sort_type = $('#hidden_sort_type').val();
+  var column_name = '';
+  var sort_type = '';
   var page = $('#hidden_page').val();
   fetch_data(page, sort_type, column_name, query);
  });
