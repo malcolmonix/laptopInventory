@@ -17,6 +17,8 @@ use App\Models\Employee;
 use App\Models\Project;
 use Validator;
 use File;
+use App\Exports\InventoryExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 
@@ -52,6 +54,11 @@ class InventoryHistoryController extends AppBaseController
         
         return view('inventory_histories.index')
                         ->with(compact('data'));
+    }
+
+    public function exportExcel() 
+    {
+        return Excel::download(new InventoryExport, 'laptop_inventory.xlsx');
     }
     
     public function fetch_data(Request $request)
