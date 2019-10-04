@@ -15,8 +15,6 @@
 
         <div class="clearfix"></div>
 
-        
-
         <div class="box box-primary">
             <div class="box-body">
                     @include('inventory_histories.table')
@@ -26,5 +24,65 @@
         
         </div>
     </div>
+
+<script type="text/javascript">
+
+    let data = {!! json_encode($data) !!};
+    let results = JSON.parse(data);   
+
+    rowElement = document.getElementById('equipmentContainer');
+
+    html = `
+            <tr class="graybg js--inventoryRow" id="inventoryRow">
+            <td>  %count% </td>    
+            <td>{Employee}</td>
+            <td>{Equipment}</td>
+            <td>{TagNumber}</td>
+            <td>{ComputerName}</td>
+            <td>{Status}</td>
+            <td>
+                    <form action="<?php echo "inventoryHistories/delete/%id%" ?>" class="form-horizontal" method="delete" >
+                <div class='btn-group'>
+                    <a href="inventoryHistories/%id%" class='btn btn-default btn-xs' title="See Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="inventoryHistories/%id%/edit" class='btn btn-default btn-xs' title="Edit Info"><i class="glyphicon glyphicon-edit"></i></a>
+                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                </div>
+                </form>
+
+            </td>   
+            
+        </tr>
+                    `;
+
+    let count = 0;
+
+   results.forEach(el => {
+      //console.log(el.equipment);
+        count += 1;
+       //Replace the placeholder text with some actual data
+       newHtml = html.replace('%count%', count);
+       newHtml = newHtml.replace(/%id%/g, el.id);
+       newHtml = newHtml.replace('{Employee}', el.employee);
+       newHtml = newHtml.replace('{Equipment}', el.equipment);
+       newHtml = newHtml.replace('{TagNumber}', el.serialnumber);
+       newHtml = newHtml.replace('{ComputerName}', el.computer_name);
+       newHtml = newHtml.replace('{Status}', el.status);
+
+       //Insert the HTML into the DOM
+       rowElement.insertAdjacentHTML('beforeend', newHtml);
+   });
+
+   filterList = () => {
+       let searchInput, filter, tr, i, td, txtValue;
+       
+       searchInput = document.getElementById('searchInput');
+       filter = searchInput.value.toUpperCase();
+       trs = document.querySelectorAll('.js--inventoryRow');
+       trs.forEach(tr => tr.style.display = [...tr.children].find(td => td.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
+   };
+
+
+</script>
+                
 @endsection
 

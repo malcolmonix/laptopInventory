@@ -16,7 +16,6 @@ class InventoryExport implements FromView
 {
     public function view(): View
     {
-
         $data = InventoryHistory::all();
     
         return view('inventory_histories.export')

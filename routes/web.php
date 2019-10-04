@@ -39,6 +39,8 @@ Route::get('download/{id}', 'InventoryHistoryController@download');
 
 Route::get('inventory_histories/edit', 'InventoryHistoryController@edit');
 Route::post('inventory/update', 'InventoryHistoryController@update');
+Route::get('inventoryHistories/delete/{id}', 'InventoryHistoryController@destroy');
+Route::get('equipment/delete/{id}', 'EquipmentController@destroy');
 Route::get('inventory/export', 'InventoryHistoryController@exportExcel')->name('inventory_histories.excel');
 
 

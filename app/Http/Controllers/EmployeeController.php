@@ -38,7 +38,7 @@ class EmployeeController extends AppBaseController
                 ->join('projects','employees.project_id','=','projects.id' )
                 ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
                 ->orderBy('employees.employee_id','asc')
-                ->paginate(10);
+                ->paginate(20);
 
         return view('employees.index',compact('data'))->render();
     }
