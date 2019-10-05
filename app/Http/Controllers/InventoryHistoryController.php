@@ -50,7 +50,7 @@ class InventoryHistoryController extends AppBaseController
                     ->join('employees','inventory_histories.employee_id','=','employees.id' )
                     ->join('users','inventory_histories.user_id','=','users.id' )
                     ->select('equipments.name as equipment', 'equipments.brand_id as brand_id','equipments.id as equipment_id','equipments.comment',        'equipments.serialnumber','equipments.computer_name','employees.name as employee', 'projects.name as project','situations.name as status','inventory_histories.id','inventory_histories.issue_date','inventory_histories.approvedby','inventory_histories.remarks','inventory_histories.created_at','inventory_histories.updated_at','users.name as postedby')
-                    ->orderBy('inventory_histories.id','asc')->get();                    
+                    ->orderBy('employees.name','asc')->get();                    
         
         $json_data = $data['inventory']->toJson();
         

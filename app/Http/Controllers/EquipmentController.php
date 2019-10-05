@@ -48,7 +48,7 @@ class EquipmentController extends AppBaseController
                     'brands.name as brand',
                     'situations.Name as status')->where('equipments.deleted_at', NULL)
                     ->where('brands.deleted_at', NULL)
-                    ->orderBy('equipments.name', 'asc')->get();
+                    ->orderBy('brands.name', 'asc')->get();
         
             $json_data = $data->toJson();
 
@@ -84,7 +84,7 @@ class EquipmentController extends AppBaseController
                          'brands.name as brand',
                          'situations.Name as status')->where('equipments.deleted_at', NULL)
                         ->where('brands.deleted_at', NULL)
-                ->orderBy('equipments.name', 'asc')
+                ->orderBy('brands.name', 'asc')
 
                 ->paginate(20);
 

@@ -37,10 +37,12 @@ class EmployeeController extends AppBaseController
         $data = DB::table('employees')
                 ->join('projects','employees.project_id','=','projects.id' )
                 ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
-                ->orderBy('employees.employee_id','asc')
-                ->paginate(20);
+                ->orderBy('employees.name','asc')
+                ->get();
 
-        return view('employees.index',compact('data'))->render();
+        
+        $json_data = $data->toJson();
+        return view('employees.index')->with('data', $json_data);
     }
 
     

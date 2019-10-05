@@ -82,17 +82,8 @@ class UserController extends AppBaseController
             ->where('email',request('email'))
             ->where('deleted_at',null)
             ->exists() == false)
-        {
-            
-            //DB::table('users')->insert(
-             // [
-              //    'name'=>request('name'), 'email'=>request('email'), 
-             //     'password'=>bcrypt($request['password']),'active'=>('1'),
-             //     'remember_token'=>$request['remember_token'],
-             /////     'created_at'=>$date,
-             //     'updated_at'=>$date
-             //]
-            //);
+        {           
+           
                
             
             $user = $this->userRepository->create($input);
@@ -193,6 +184,7 @@ class UserController extends AppBaseController
     public function update($id, UpdateUserRequest $request)
     {
         $user = $this->userRepository->findWithoutFail($id);
+        
 
         if (empty($user)) {
             Flash::error('User not found');
@@ -200,7 +192,11 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
 
         Flash::success('User updated successfully.');
 
