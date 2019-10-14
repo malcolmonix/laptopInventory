@@ -107,11 +107,13 @@ class InventoryHistoryController extends AppBaseController
     public function create()
     {
         // $equipment = Equipment::pluck('name','id');
-        $equipment = Equipment::select('name','serialnumber','computer_name','id', 'brand_id')->get();
+        $equipment = Equipment::select('name','serialnumber','computer_name','id', 'brand_id')
+                     ->where('situation_id', '>', 1)->get();
         $situation = Situation::pluck('name','id');
         $employee = Employee::pluck('name','id');
         $project = Project::pluck('name','id');
 
+        
         return view('inventory_histories.create')
             ->with('equipment', $equipment)
             ->with('situation',$situation)

@@ -25,6 +25,14 @@
     </div>
 
 
+    <div class="form-group col-sm-6">
+        <label for="satus">Employee Status:</label>
+         <select name="active" class="form-control">
+                <option value="1">Active</option>
+                <option value="0">In-Active</option>
+              </select>
+    </div>
+
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

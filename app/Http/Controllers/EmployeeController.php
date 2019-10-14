@@ -37,6 +37,8 @@ class EmployeeController extends AppBaseController
         $data = DB::table('employees')
                 ->join('projects','employees.project_id','=','projects.id' )
                 ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
+                ->where('employees.deleted_at', NULL)
+                ->where('employees.active', 1)
                 ->orderBy('employees.name','asc')
                 ->get();
 
@@ -44,31 +46,7 @@ class EmployeeController extends AppBaseController
         $json_data = $data->toJson();
         return view('employees.index')->with('data', $json_data);
     }
-
-    
-    public function fetch_data(Request $request)
-    {
-        if($request->ajax())
-        {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query = $request->get('query');
-            $query = str_replace(" ", "%", $query);
-
-            $data = DB::table('employees')
-                    ->join('projects','employees.project_id','=','projects.id' )
-                    ->orWhere('employees.employee_id', 'like','%'. $query .'%')
-                    ->orWhere('employees.name', 'like','%'. $query .'%')
-                    ->orWhere('projects.name', 'like','%'. $query .'%')
-                    ->orWhere('employees.position', 'like','%'. $query .'%')
-                    ->select('employees.id as id','employees.employee_id as employee_id','employees.name as employee_name','employees.position as position', 'projects.name as project')
-                    ->orderBy($sort_by, $sort_type)
-                    ->paginate(10);      
-
-            return view('employees.pagination', compact('data'))->render();     
-
-        }          
-    }
+  
 
     /**
      * Show the form for creating a new Employee.
@@ -145,7 +123,7 @@ class EmployeeController extends AppBaseController
        
         return view('employees.show')
          ->with('project',$project)
-        ->with('employee', $employee);
+         ->with('employee', $employee);
     }
 
     /**
@@ -188,7 +166,12 @@ class EmployeeController extends AppBaseController
             return redirect(route('employees.index'));
         }
 
-        $employee = $this->employeeRepository->update($request->all(), $id);
+        
+        $employee->name = $request->input('name');
+        $employee->position = $request->input('position');
+        $employee->project_id = $request->input('project_id');
+        $employee->active = $request->input('active');
+        $employee->save();
 
         Flash::success('Employee updated successfully.');
 
