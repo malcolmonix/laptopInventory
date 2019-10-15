@@ -23,12 +23,24 @@
 </div>
 
 <!-- Equipment Id Field -->
-<div class="form-group">
+{{-- <div class="form-group">
     {!! Form::label('equipment_id', 'Device Name:',['class' => 'col-sm-3 control-label']) !!}
      <div class="col-sm-8">
     {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
 </div>
-</div>
+</div> --}}
+
+<div class="form-group">
+        <label for="equipment_id" class="col-sm-3 control-label">Device Name</label>
+        <div class="col-sm-8">
+        <select name="equipment_id" class="form-control">
+            @foreach ($equipment as $item)
+                <option value="{{$item->id}}">{{ App\Models\Brand::find($item->brand_id)->name }} {{$item->name }} - {{$item->serialnumber}} -  {{$item->computer_name}} </option>
+            @endforeach        
+        </select>
+    </div>
+    </div>
+
 
 <!-- Project Id Field -->
 <div class="form-group">

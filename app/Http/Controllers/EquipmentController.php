@@ -48,10 +48,15 @@ class EquipmentController extends AppBaseController
                     'brands.name as brand',
                     'situations.Name as status')->where('equipments.deleted_at', NULL)
                     ->where('brands.deleted_at', NULL)
-            ->orderBy('equipments.name', 'asc')
-            ->paginate(20);
+                    ->orderBy('brands.name', 'asc')->get();
+        
+            $json_data = $data->toJson();
 
-        return view('equipment.index', compact('data'))->render();
+            // print_r($json_data);
+        
+            return view('equipment.index')->with('data', $json_data);   
+
+        // return view('equipment.index', compact('data'))->render();
     }
     public function fetch_data(Request $request)
     {
@@ -79,7 +84,7 @@ class EquipmentController extends AppBaseController
                          'brands.name as brand',
                          'situations.Name as status')->where('equipments.deleted_at', NULL)
                         ->where('brands.deleted_at', NULL)
-                ->orderBy('equipments.name', 'asc')
+                ->orderBy('brands.name', 'asc')
 
                 ->paginate(20);
 

@@ -1,33 +1,42 @@
 @section('title', 'Manage Inventory')
+
+<?php 
+    $input['status'] = !empty($input['status']) ? $input['status'] : null; 
+    $input['tagnum'] = !empty($input['tagnum']) ? $input['tagnum'] : null; 
+?>
+
 <div class="panel panel-default">
     <div class="panel-heading">Search Inventory</div>
     <div class="panel-body">
-    <div class="form-group">
-        <input type="text" name="search" id="search" class="form-control" placeholder="search inventory history" />
+   
+        <div class="form-group">
+        <input type="text" name="search" id="searchInput" onkeyup="filterList()" class="form-control" placeholder="search inventory history" />
     </div>
+
+   
+    
+
+
+
     <div class="table-responsive">
 
     <table class="table table-hover">
         <thead>
         <tr class="heading--table">
             <th>SN</th>
-            {{-- <th class="sorting" data-sorting_type="asc" data-column_name="id" style="cursor: pointer">Date<span id="id_icon"></span></th> --}}
             <th >Employee</th>
             <th >Equipment</th>
             <th >Tag Number</th>
             <th >Computer Name</th>
-            {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_project" style="cursor: pointer">Project<span id="post_project_icon"></span></th> --}}
             <th >Status<span id="post_status_icon"></span></th>
-            {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_approvedby" style="cursor: pointer">Approved by<span id="post_approvedby_icon"></span></th> --}}
-            {{-- <th class="sorting" data-sorting_type="asc" data-column_name="post_postedby" style="cursor: pointer">Posted by<span id="post_postedby_icon"></span></th> --}}
-
             <th colspan="2">Action</th>
         </tr>
         </thead>
             
-        <tbody>
+        <tbody id="equipmentContainer">
 
             @include('inventory_histories.pagination')
+
         </tbody>
                 
     </table>
@@ -50,82 +59,3 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-$(document).ready(function(){
-
- function clear_icon()
- {
-  $('#id_icon').html('');
-  $('#post_employee_icon').html('');
-  $('#post_equipment_icon').html('');
-  $('#post_project_icon').html('');
-  $('#post_status_icon').html('');
-  $('#post_approvedby_icon').html('');
-  $('#post_postedby_icon').html('');
- }
-
- function fetch_data(page, sort_type, sort_by, query)
- {
-  $.ajax({
-   url:"/inventoryHistories/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query,
-   success:function(data)
-   {
-    $('tbody').html('');
-    $('tbody').html(data);
-   }
-  })
- }
- 
- $(document).on('keyup', '#search', function(){
-  var query = $('#search').val();
-  var column_name = '';
-  var sort_type = '';
-  var page = $('#hidden_page').val();
-  fetch_data(page, sort_type, column_name, query);
- });
-
- $(document).on('click', '.sorting', function(){
-  var column_name = $(this).data('column_name');
-  var order_type = $(this).data('sorting_type');
-  var reverse_order = '';
-  if(order_type == 'asc')
-  {
-   $(this).data('sorting_type', 'desc');
-   reverse_order = 'desc';
-   clear_icon();
-   $('#'+column_name+'_icon').html('<span class="glyphicon glyphicon-triangle-bottom"></span>');
-  }
-  if(order_type == 'desc')
-  {
-   $(this).data('sorting_type', 'asc');
-   reverse_order = 'asc';
-   clear_icon
-   $('#'+column_name+'_icon').html('<span class="glyphicon glyphicon-triangle-top"></span>');
-  }
-  $('#hidden_column_name').val(column_name);
-  $('#hidden_sort_type').val(reverse_order);
-  var page = $('#hidden_page').val();
-  var query = $('#search').val();
-  fetch_data(page, reverse_order, column_name, query);
- });
-
- $(document).on('click', '.pagination a', function(event){
-  event.preventDefault();
-  var page = $(this).attr('href').split('page=')[1];
-  $('#hidden_page').val(page);
-  var column_name = $('#hidden_column_name').val();
-  var sort_type = $('#hidden_sort_type').val();
-
-  var query = $('#search').val();
-
-  $('li').removeClass('active');
-        $(this).parent().addClass('active');
-  fetch_data(page, sort_type, column_name, query);
- });
-
-
-});
-</script>
