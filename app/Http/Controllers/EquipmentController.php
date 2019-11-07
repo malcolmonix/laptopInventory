@@ -48,7 +48,8 @@ class EquipmentController extends AppBaseController
                     'brands.name as brand',
                     'situations.Name as status')->where('equipments.deleted_at', NULL)
                     ->where('brands.deleted_at', NULL)
-                    ->orderBy('brands.name', 'asc')->get();
+                    ->where('equipment_type_id',1)
+                    ->orderBy('equipments.computer_name', 'asc')->get();
         
             $json_data = $data->toJson();
 
