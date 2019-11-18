@@ -192,7 +192,7 @@
 <!-- END PLUGINS -->
 
 <!-- START THIS PAGE PLUGINS-->
-<script type='text/javascript' src='{{asset('backend/js/plugins/icheck/icheck.min.js')}}'></script>
+<script type='text/javascript' src="{{asset('backend/js/plugins/icheck/icheck.min.js')}}"></script>
 <script type="text/javascript"
         src="{{asset('backend/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('backend/js/plugins/scrolltotop/scrolltopcontrol.js')}}"></script>
@@ -202,8 +202,7 @@
 <script type="text/javascript" src="{{asset('backend/js/plugins/rickshaw/d3.v3.js')}}"></script>
 <script type="text/javascript" src="{{asset('backend/js/plugins/rickshaw/rickshaw.min.js')}}"></script>
 <script type='text/javascript' src="{{asset('backend/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
-<script type='text/javascript'
-        src="{{asset('backend/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}'></script>
+<script type='text/javascript' src="{{asset('backend/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
 <script type='text/javascript' src="{{asset('backend/js/plugins/bootstrap/bootstrap-datepicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('backend/js/plugins/owl/owl.carousel.min.js')}}"></script>
 
@@ -211,9 +210,9 @@
 <script type="text/javascript" src="{{asset('backend/js/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <!-- END THIS PAGE PLUGINS-->
 
-<!-- START TEMPLATE -->
+<!-- START TEMPLATE 
 <script type="text/javascript" src="{{asset('backend/js/settings.js')}}"></script>
-
+-->
 <script type="text/javascript" src="{{asset('backend/js/plugins.js')}}"></script>
 <script type="text/javascript" src="{{asset('backend/js/actions.js')}}"></script>
 

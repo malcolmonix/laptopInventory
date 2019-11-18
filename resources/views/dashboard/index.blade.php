@@ -24,10 +24,11 @@
                     @endforeach
                    <div class="widget-subtitle">TOTAL: {{ $data->totalequipment }} </div>
                 </div>
-                <div class="widget-controls">
+               <!-- <div class="widget-controls">
                     <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
                     data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
                 </div>
+                -->
             </div>
         </div>
         @endforeach

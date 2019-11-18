@@ -38,8 +38,8 @@
                 <option value="{{$item->id}}">{{ App\Models\Brand::find($item->brand_id)->name }} {{$item->name }} - {{$item->serialnumber}} -  {{$item->computer_name}} </option>
             @endforeach        
         </select>
-    </div>
-    </div>
+</div>
+</div>
 
 
 <!-- Project Id Field -->

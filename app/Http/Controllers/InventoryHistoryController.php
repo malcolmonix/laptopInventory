@@ -108,7 +108,10 @@ class InventoryHistoryController extends AppBaseController
     {
         // $equipment = Equipment::pluck('name','id');
         $equipment = Equipment::select('name','serialnumber','computer_name','id', 'brand_id')
-                     ->where('situation_id', '>', 1)->get();
+                     ->where('situation_id', '>', 1)
+                     ->where('equipment_type_id',1)
+                     ->orderby('id')
+                     ->get();
         $situation = Situation::pluck('name','id');
         $employee = Employee::pluck('name','id');
         $project = Project::pluck('name','id');
@@ -145,7 +148,7 @@ class InventoryHistoryController extends AppBaseController
         $validation = Validator::make($request->all(), [
             'document_url' => 'required|mimes:pdf|max:10000'
            ]);
-                     
+        
           
            if($validation->passes())
            {
@@ -173,20 +176,15 @@ class InventoryHistoryController extends AppBaseController
             ]
          );
 
-           //$inventoryHistory = $this->inventoryHistoryRepository->create($input);
-
            $equipment = Equipment::find($equipmentid);
            $equipment->situation_id = $statusid;
            $equipment->save();
 
-            // DB::table('equipments')
-            //     ->where('id',$equipmentid)
-            //     ->update(['situation_id'=>$statusid, 'user_id'=>$employeeid]);
-
+            
             
             Flash::success('Inventory saved successfully.');
             return redirect(route('inventoryHistories.index'));
-        
+            
     }
 
     /**
@@ -365,6 +363,11 @@ class InventoryHistoryController extends AppBaseController
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $filename = $image->getClientOriginalName();
                 $image->move(public_path('documents'),  $filename);
+
+                DB::table('inventory_histories')
+                ->where('id',$id)
+                ->update(['document_url'=>$filename]);
+
            }
            else
            {
@@ -373,9 +376,7 @@ class InventoryHistoryController extends AppBaseController
         }    
               
 
-       DB::table('inventory_histories')
-            ->where('id',$id)
-            ->update(['document_url'=>$filename]);
+       
 
        $inventoryHistory = $this->inventoryHistoryRepository->update($request->all(), $id);
 
