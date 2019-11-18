@@ -68,7 +68,7 @@
            newHtml = newHtml.replace(/%ram%/g, el.ram);
            newHtml = newHtml.replace('%brand%', el.brand);
            newHtml = newHtml.replace('%disk_size%', el.disk_size);
-           newHtml = newHtml.replace('%equipment_model%', el.equipment_model);
+           newHtml = newHtml.replace('%equipment_model%', el.equipmentname);
            newHtml = newHtml.replace('%serialnumber%', el.serialnumber);           
            if(el.computer_name){
                 newHtml = newHtml.replace('%computer_name%', el.computer_name);
