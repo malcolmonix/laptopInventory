@@ -59,7 +59,7 @@
 
 <!-- Projectto Id Field -->
 <div class="form-group">
-    <!-- {!! Form::label('projectTo_id', 'Project To:',['class' => 'col-sm-3 control-label']) !!} -->
+    {!! Form::label('projectTo_id', 'Project To:',['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-8">
         {!! Form::select('projectTo_id', $project, null, ['class' => 'form-control']) !!}
 </div>
