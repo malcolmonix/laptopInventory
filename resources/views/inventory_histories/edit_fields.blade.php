@@ -67,13 +67,6 @@
 </div>
 </div>
 
-<div class="form-group">
-    <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
-
-    <div class="col-md-6 col-xs-12">
-        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Upload file"/>
-    </div>
-</div>
 
   <!-- Remarks Field -->
     <div class="form-group">
@@ -83,6 +76,14 @@
         </div>
     </div>
     
+    
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
+
+    <div class="col-md-6 col-xs-12">
+        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Upload file"/>
+    </div>
+</div>
 
     <div class="form-group">
         {!! Form::label('document', 'Document:',['class' => 'col-sm-3 control-label']) !!}
