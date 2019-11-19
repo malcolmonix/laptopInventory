@@ -20,14 +20,6 @@
     </div>
 </div>
 
-<!-- Equipment Id Field -->
-{{-- <div class="form-group">
-    {!! Form::label('equipment_id', 'Device Name:',['class' => 'col-sm-3 control-label']) !!}
-     <div class="col-sm-8">
-         {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
-</div>
-</div> --}}
-
 
 <div class="form-group">
         <label for="equipment_id" class="col-sm-3 control-label">Device Name</label>
