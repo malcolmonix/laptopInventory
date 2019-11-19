@@ -76,7 +76,6 @@
         </div>
     </div>
     
-    
 <div class="form-group">
     <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
 
@@ -88,7 +87,7 @@
     <div class="form-group">
         {!! Form::label('document', 'Document:',['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-8">
-            <iframe id="show_pdf" src="{{ asset( $document) }}" style="width:100%; height: 600px; border:1px solid red;"></iframe>
+            <iframe id="show_pdf" src="{{ asset( $document) }}" style="width:100%; height: 600px; border:2px solid red;"></iframe>
         </div>
     </div>
 
