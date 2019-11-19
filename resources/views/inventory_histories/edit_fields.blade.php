@@ -12,9 +12,11 @@
         </div>
     </div>
 
+
+
 <!-- Employee Id Field -->
 <div class="form-group">
-        {!! Form::label('employee_id', 'Employee*:',['class' => 'col-sm-3 control-label']) !!}
+        {!! Form::label('employee_id', 'Employee:',['class' => 'col-sm-3 control-label']) !!}
      <div class="col-sm-8">
        {!! Form::select('employee_id', $employee, null, ['class' => 'form-control']) !!}     
     </div>
@@ -22,7 +24,7 @@
 
 <!-- Equipment Id Field -->
 {{-- <div class="form-group">
-    {!! Form::label('equipment_id', 'Device Name**:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('equipment_id', 'Device Name:',['class' => 'col-sm-3 control-label']) !!}
      <div class="col-sm-8">
          {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
 </div>
@@ -77,7 +79,7 @@
     <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
 
     <div class="col-md-6 col-xs-12">
-        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Upload file"/>
+        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Browse file"/>
     </div>
 </div>
 
@@ -85,9 +87,10 @@
     <div class="form-group">
         {!! Form::label('remarks', 'Remark:',['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-8">
-        {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information about the staff and the equipment assignment?']) !!}
+        {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information of where staff is currently working and who is he?']) !!}
         </div>
     </div>
+    
 
     <div class="form-group">
         {!! Form::label('document', 'Document:',['class' => 'col-sm-3 control-label']) !!}
@@ -103,7 +106,7 @@
         <div class='control-group'>
             {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
            <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-primary">Return</a>
-           <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
+            <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
         </div>
     </div>
     </div>
