@@ -105,7 +105,7 @@
     <div class="col-sm-offset-2 col-sm-10">
         <div class='control-group'>
             {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-           <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
+           <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Return</a>
             <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
         </div>
     </div>
