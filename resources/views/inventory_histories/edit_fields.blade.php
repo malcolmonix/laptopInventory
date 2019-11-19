@@ -22,7 +22,7 @@
 
 <!-- Equipment Id Field -->
 {{-- <div class="form-group">
-    {!! Form::label('equipment_id', 'Device Name*:',['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('equipment_id', 'Device Name:',['class' => 'col-sm-3 control-label']) !!}
      <div class="col-sm-8">
          {!! Form::select('equipment_id', $equipment, null, ['class' => 'form-control']) !!}
 </div>
@@ -55,14 +55,6 @@
     <div class="col-sm-8">
        {!! Form::select('situation_id', $situation, null, ['class' => 'form-control']) !!}
  </div>
-</div>
-
-<!-- Projectto Id Field -->
-<div class="form-group">
-    <!-- {!! Form::label('projectTo_id', 'Project To:',['class' => 'col-sm-3 control-label']) !!} -->
-    <div class="col-sm-8">
-        {!! Form::select('projectTo_id', $project, null, ['class' => 'form-control']) !!}
-</div>
 </div>
 
 <!-- Approvedby Field -->
