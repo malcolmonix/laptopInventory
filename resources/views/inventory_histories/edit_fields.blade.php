@@ -71,7 +71,7 @@
     <label class="col-md-3 col-xs-12 control-label">Equipment Received Form:</label>
 
     <div class="col-md-6 col-xs-12">
-        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Browse file"/>
+        <input type="file" class="fileinput btn-primary" name="document_url" id="document_url" title="Upload file"/>
     </div>
 </div>
 
@@ -79,7 +79,7 @@
     <div class="form-group">
         {!! Form::label('remarks', 'Remark:',['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-8">
-        {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information of where staff is currently working and who is he?']) !!}
+        {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information about the employee and the assignment']) !!}
         </div>
     </div>
     
