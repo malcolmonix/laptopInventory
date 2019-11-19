@@ -12,8 +12,6 @@
         </div>
     </div>
 
-
-
 <!-- Employee Id Field -->
 <div class="form-group">
         {!! Form::label('employee_id', 'Employee:',['class' => 'col-sm-3 control-label']) !!}
@@ -102,11 +100,11 @@
     </div>
 
 <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-offset-12 col-sm-10">
         <div class='control-group'>
             {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
            <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-primary">Return</a>
-            <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
+           <a href="{!! route('inventoryHistories.index') !!}" class="btn btn-default">Cancel</a>
         </div>
     </div>
     </div>
