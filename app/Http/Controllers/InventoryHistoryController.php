@@ -19,6 +19,8 @@ use Validator;
 use File;
 use App\Exports\InventoryExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
+
 
 
 
@@ -56,6 +58,22 @@ class InventoryHistoryController extends AppBaseController
         
         return view('inventory_histories.index')->with('data', $json_data);       
         
+    }
+
+    public function getSomeRows()
+    {
+
+        $rows = \App\Models\InventoryHistory::paginate(15);
+
+        return response()->json([
+            'status' => 'success',
+            'errors' => false,
+            'data' => [
+                'rows' => json_decode($rows->toJson()),
+                'paginationMarkup' => $rows->render()
+            ]
+        ], 200);
+
     }
 
     public function exportExcel() 

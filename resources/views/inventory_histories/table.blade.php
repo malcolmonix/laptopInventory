@@ -1,27 +1,21 @@
 @section('title', 'Manage Inventory')
 
 <?php 
-    $input['status'] = !empty($input['status']) ? $input['status'] : null; 
-    $input['tagnum'] = !empty($input['tagnum']) ? $input['tagnum'] : null; 
+    $input['status'] = !empty($input['status']) ? $input['status'] : null;
+    $input['tagnum'] = !empty($input['tagnum']) ? $input['tagnum'] : null;
 ?>
 
 <div class="panel panel-default">
     <div class="panel-heading">Search Inventory</div>
     <div class="panel-body">
-   
         <div class="form-group">
         <input type="text" name="search" id="searchInput" onkeyup="filterList()" class="form-control" placeholder="search inventory history" />
     </div>
 
-   
-    
+        <div class="table-responsive">
 
-
-
-    <div class="table-responsive">
-
-    <table class="table table-hover">
-        <thead>
+            <table class="table table-hover">
+                <thead>
         <tr class="heading--table">
             <th>SN</th>
             <th >Employee</th>
@@ -32,13 +26,11 @@
             <th colspan="2">Action</th>
         </tr>
         </thead>
-            
+
         <tbody id="equipmentContainer">
-
             @include('inventory_histories.pagination')
-
         </tbody>
-                
+
     </table>
     <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
     <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
@@ -51,11 +43,9 @@
     <input type="hidden" name="hidden_sort_type6" id="hidden_sort_type6" value="asc" />
     <input type="hidden" name="hidden_sort_type7" id="hidden_sort_type7" value="asc" />
     <input type="hidden" name="hidden_sort_type8" id="hidden_sort_type8" value="asc" />
-    
 
-</div>
-</div>
-</div>
+    </div>
+    </div>
 </div>
 
 
