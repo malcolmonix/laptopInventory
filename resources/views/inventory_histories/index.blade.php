@@ -32,7 +32,7 @@
     let results = JSON.parse(data);   
 
     rowElement = document.getElementById('equipmentContainer');
-    
+
 
     html = `
             <tr class="graybg js--inventoryRow" id="inventoryRow">
@@ -81,6 +81,14 @@
        trs = document.querySelectorAll('.js--inventoryRow');
        trs.forEach(tr => tr.style.display = [...tr.children].find(td => td.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
    };
+
+function Pagination(pageEleArr, numOfEleToDisplayPerPage){
+    this.pageEleArr = pageEleArr;
+    this.numOfEleToDisplayPerPage = numOfEleToDisplayPerPage;
+    this.elementCount = this.pageEleArr.length;
+    this.numOfPages = Math.ceil(this.elementCount / this.numOfEleToDisplayPerPage);
+    
+}
 
 </script>
                 

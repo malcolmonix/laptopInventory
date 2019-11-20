@@ -5,7 +5,7 @@
         <div class="row">
         
         @foreach($equipment as $data)
-        <div class="col-md-6">
+        <div class="col-md-6 mt-5">
             <div class="widget widget-default widget-item-icon"
                 onclick="location.href='{{'#'}}';">
                 <div class="widget-item-left">
