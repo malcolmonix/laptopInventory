@@ -72,7 +72,7 @@
     <div class="form-group">
         {!! Form::label('remarks', 'Remark:',['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-8">
-        {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information about the employee and the assignment']) !!}
+        {!! Form::textarea('remarks', null, ['class' => 'form-control', 'placeholder' => 'Enter descriptive information about the employee and the equipment assignment']) !!}
         </div>
     </div>
     
@@ -87,7 +87,7 @@
     <div class="form-group">
         {!! Form::label('document', 'Document:',['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-8">
-            <iframe id="show_pdf" src="{{ asset( $document) }}" style="width:100%; height: 600px; border:5px solid blue;"></iframe>
+            <iframe id="show_pdf" src="{{ asset( $document) }}" style="width:100%; height: 600px; border:2px solid red;"></iframe>
         </div>
     </div>
 
