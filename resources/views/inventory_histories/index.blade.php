@@ -32,6 +32,7 @@
     let results = JSON.parse(data);   
 
     rowElement = document.getElementById('equipmentContainer');
+    
 
     html = `
             <tr class="graybg js--inventoryRow" id="inventoryRow">
@@ -70,7 +71,6 @@
        newHtml = newHtml.replace('{Status}', el.status);
 
        //Insert the HTML into the DOM
-       rowElement.insertAdjacentHTML('beforeend', newHtml);
    });
 
    filterList = () => {

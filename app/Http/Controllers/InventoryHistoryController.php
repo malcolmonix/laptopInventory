@@ -196,7 +196,7 @@ class InventoryHistoryController extends AppBaseController
      */
     public function show($id)
     {
-        $inventoryHistory = DB::table('inventory_histories as i')
+        $inventoryHistory = DB::table('inventory_histories as i') -> paginate(15)
                                 ->join('equipments','i.equipment_id','=','equipments.id' )
                                 ->join('situations','i.situation_id','=','situations.id' )
                                 ->join('projects','i.project_id','=','projects.id' )
