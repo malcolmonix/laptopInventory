@@ -20,6 +20,7 @@ use Response;
 use Validator;
 
 
+
 class InventoryHistoryController extends AppBaseController
 {
     /** @var  InventoryHistoryRepository */
@@ -437,7 +438,6 @@ class InventoryHistoryController extends AppBaseController
     {
         Alert::message('Robots are working!');
 
-        return Redirect::home();
     }
 
 }

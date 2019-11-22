@@ -1,8 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Manage Inventory')
 @section('content')
+
+
+
     <section class="content-header">
-        <h1 class="pull-left">Manage Inventory <span><a href="{{Alert::message('Robots are working!')}}}">test alert</a></span></h1>
+        <h1 class="pull-left">Manage Inventory <span><a href="{{UxWeb\SweetAlert\SweetAlert::message('Robots are working!')}}}">test alert</a></span></h1>
 
         <div class="text-right">
            <a  class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('inventoryHistories.create') }}">Return</a>
@@ -27,13 +30,12 @@
         </div>
     </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
     let data = {!! json_encode($data) !!};
     let results = JSON.parse(data);   
 
     rowElement = document.getElementById('equipmentContainer');
-
 
     html = `<tr class="graybg js--inventoryRow" id="inventoryRow">
             <td>  %count% </td>    
@@ -88,6 +90,7 @@ function Pagination(pageEleArr, numOfEleToDisplayPerPage){
 }
 
 </script>
-                
+
+
 @endsection
 
