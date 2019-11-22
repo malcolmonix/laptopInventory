@@ -56,25 +56,12 @@ class InventoryHistoryController extends AppBaseController
         
         $json_data = $data['inventory']->toJson();
         
-        return view('inventory_histories.index')->with('data', $json_data);       
+        return view('inventory_histories.index')->with('data', $json_data);
+
+        
         
     }
 
-    public function getSomeRows()
-    {
-
-        $rows = \App\Models\InventoryHistory::paginate(15);
-
-        return response()->json([
-            'status' => 'success',
-            'errors' => false,
-            'data' => [
-                'rows' => json_decode($rows->toJson()),
-                'paginationMarkup' => $rows->render()
-            ]
-        ], 200);
-
-    }
 
     public function exportExcel() 
     {
@@ -214,31 +201,36 @@ class InventoryHistoryController extends AppBaseController
      */
     public function show($id)
     {
-        $inventoryHistory = DB::table('inventory_histories as i')
-                                ->join('equipments','i.equipment_id','=','equipments.id' )
-                                ->join('situations','i.situation_id','=','situations.id' )
-                                ->join('projects','i.project_id','=','projects.id' )
-                                ->join('employees','i.employee_id','=','employees.id' )
-                                ->join('users','i.user_id','=','users.id' )
-                                ->where('i.id','=',$id)
-                                ->select('equipments.name as equipment',
-                                        'equipments.serialnumber as serialnumber',
-                                        'equipments.brand_id as brand_id',
-                                        'equipments.computer_name as computer_name',
-                                        'employees.name as employee',
-                                        'employees.employee_id', 
-                                        'projects.name as project',
-                                        'situations.name as status',
-                                        'i.id','i.issue_date',
-                                        'i.approvedby','i.remarks',
-                                        'i.created_at','i.updated_at',
-                                        'users.name as postedby')
-                                ->orderBy('i.id','desc')->first();
-                                
 
-       $inventoryHistoryDoc = $this->inventoryHistoryRepository->findWithoutFail($id);
-       $filename = $inventoryHistoryDoc->document_url;
-       $documents = "/documents/" . $filename;
+        Alert::message('Robots are working!');
+
+        return Redirect::home();
+
+//        $inventoryHistory = DB::table('inventory_histories as i')
+//                                ->join('equipments','i.equipment_id','=','equipments.id' )
+//                                ->join('situations','i.situation_id','=','situations.id' )
+//                                ->join('projects','i.project_id','=','projects.id' )
+//                                ->join('employees','i.employee_id','=','employees.id' )
+//                                ->join('users','i.user_id','=','users.id' )
+//                                ->where('i.id','=',$id)
+//                                ->select('equipments.name as equipment',
+//                                        'equipments.serialnumber as serialnumber',
+//                                        'equipments.brand_id as brand_id',
+//                                        'equipments.computer_name as computer_name',
+//                                        'employees.name as employee',
+//                                        'employees.employee_id',
+//                                        'projects.name as project',
+//                                        'situations.name as status',
+//                                        'i.id','i.issue_date',
+//                                        'i.approvedby','i.remarks',
+//                                        'i.created_at','i.updated_at',
+//                                        'users.name as postedby')
+//                                ->orderBy('i.id','desc')->first();
+//
+//
+//       $inventoryHistoryDoc = $this->inventoryHistoryRepository->findWithoutFail($id);
+//       $filename = $inventoryHistoryDoc->document_url;
+//       $documents = "/documents/" . $filename;
 
 
 
@@ -319,6 +311,8 @@ class InventoryHistoryController extends AppBaseController
      */
     public function edit($id)
     {
+
+
         
         $inventoryHistory = $this->inventoryHistoryRepository->findWithoutFail($id);
         $equipment = Equipment::select('name','serialnumber','computer_name','id')->where('id', $inventoryHistory->equipment_id)->get();
@@ -327,7 +321,7 @@ class InventoryHistoryController extends AppBaseController
         $project = Project::pluck('name','id');
         $filename = $inventoryHistory->document_url;
         $documents = "/documents/" . $filename;
-       
+
         
         if (empty($inventoryHistory)) {
             Flash::error('Inventory not found');

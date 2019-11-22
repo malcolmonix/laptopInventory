@@ -7,8 +7,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">Search Inventory</div>
-    <div class="panel-body">
-        <div class="form-group">
+    <div class="form-group">
         <input type="text" name="search" id="searchInput" onkeyup="filterList()" class="form-control" placeholder="search inventory history" />
     </div>
 
@@ -46,7 +45,6 @@
         <input type="hidden" name="hidden_sort_type7" id="hidden_sort_type7" value="asc" />
         <input type="hidden" name="hidden_sort_type8" id="hidden_sort_type8" value="asc" />
 
-    </div>
     </div>
 </div>
 
