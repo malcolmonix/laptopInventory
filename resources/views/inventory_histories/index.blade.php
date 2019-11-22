@@ -2,7 +2,8 @@
 @section('title', 'Manage Inventory')
 @section('content')
     <section class="content-header">
-        <h1 class="pull-left">Manage Inventory</h1>
+        <h1 class="pull-left">Manage Inventory <span><a href="{{Alert::message('Robots are working!')}}}">test alert</a></span></h1>
+
         <div class="text-right">
            <a  class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('inventoryHistories.create') }}">Return</a>
            <a  class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{{ route('inventoryHistories.create') }}">Assign</a>
@@ -34,8 +35,7 @@
     rowElement = document.getElementById('equipmentContainer');
 
 
-    html = `
-            <tr class="graybg js--inventoryRow" id="inventoryRow">
+    html = `<tr class="graybg js--inventoryRow" id="inventoryRow">
             <td>  %count% </td>    
             <td>{Employee}</td>
             <td>{Equipment}</td>
@@ -50,11 +50,8 @@
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
                 </div>
                 </form>
-
-            </td>   
-            
-        </tr>
-                    `;
+            </td>
+        </tr>`;
 
     let count = 0;
 

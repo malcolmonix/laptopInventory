@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Exports\InventoryExport;
 use App\Http\Requests\CreateInventoryHistoryRequest;
 use App\Http\Requests\UpdateInventoryHistoryRequest;
+use App\Models\Employee;
+use App\Models\Equipment;
+use App\Models\Project;
+use App\Models\Situation;
 use App\Repositories\InventoryHistoryRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use File;
 use Flash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use App\Models\Equipment;
-use App\Models\Situation;
-use App\Models\Employee;
-use App\Models\Project;
 use Validator;
-use File;
-use App\Exports\InventoryExport;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Http\Controllers\Controller;
-
-
 
 
 class InventoryHistoryController extends AppBaseController
@@ -436,4 +432,12 @@ class InventoryHistoryController extends AppBaseController
 
         return redirect(route('inventoryHistories.index'));
     }
+
+    public function alert()
+    {
+        Alert::message('Robots are working!');
+
+        return Redirect::home();
+    }
+
 }
